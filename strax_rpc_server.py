@@ -1,4 +1,4 @@
-"""The Python implementation of the gRPC route guide server."""
+"""The Python implementation of the gRPC strax server."""
 
 from concurrent import futures
 import numpy as np
@@ -15,10 +15,7 @@ import config
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
-ctx = strax.Context(
-    storage=[strax.ZipDirectory(config.ZIPDIR),
-             strax.DataDirectory(config.DATADIR)],
-    register_all=strax.xenon.plugins)
+
 
 def search_field(ctx, pattern, max_matches):
     """
@@ -41,7 +38,11 @@ def search_field(ctx, pattern, max_matches):
 class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
 
     def __init__(self):
-        self.ctx = ctx
+        self.ctx = strax.Context(
+            storage=[strax.ZipDirectory(config.ZIPDIR),
+                     strax.DataDirectory(config.DATADIR)],
+            register_all=strax.xenon.plugins)
+        # self.ctx = ctx
 
     def SearchField(self, request, context):
         """

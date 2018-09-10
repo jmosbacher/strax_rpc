@@ -30,9 +30,6 @@ def data_info(stub, dataname):
 
 
 def run():
-    # NOTE(gRPC Python Team): .close() is possible on a channel and should be
-    # used in circumstances in which the with statement does not fit the needs
-    # of the code.
     with grpc.insecure_channel('localhost:50051') as channel:
         stub = strax_rpc_pb2_grpc.StraxRPCStub(channel)
         print("-------------------- Search for s1* --------------------")
