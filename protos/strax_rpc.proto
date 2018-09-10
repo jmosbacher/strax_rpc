@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package straxrpc;
+
+service StraxRPC {
+
+  rpc SearchField(SearchPattern) returns (stream Match) {}
+
+  rpc DataInfo(DataName) returns (stream Field) {}
+
+
+}
+
+message SearchPattern {
+    string pattern = 1;
+    uint32 max_matches = 2;
+
+}
+
+message Match {
+  string column = 1;
+  string dataname = 2;
+  string plugin = 3;
+
+}
+
+message DataName {
+  string name = 1;
+}
+
+message Field {
+  uint32 index = 1;
+  string name = 2;
+  string dtype = 3;
+  string comment = 4;
+}
