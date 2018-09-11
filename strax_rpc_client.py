@@ -1,15 +1,8 @@
-
 from __future__ import print_function
-
-import random
-
 import grpc
-
 import strax_rpc_pb2
 import strax_rpc_pb2_grpc
-
 import pandas as pd
-from prettytable import PrettyTable
 
 def search_field(stub, pattern, max_matches=10):
     sp = strax_rpc_pb2.SearchPattern(
@@ -51,11 +44,11 @@ def get_df(stub,run_id,dframe):
 def run():
     with grpc.insecure_channel('localhost:50051') as channel:
         stub = strax_rpc_pb2_grpc.StraxRPCStub(channel)
-        print("-------------------- Search for s1* --------------------")
+        print("---------------------- Search for s1* ----------------------")
         search_field(stub, "s1*")
         print("\n-------------- Data Info for event_basics --------------\n")
         data_info(stub, 'event_basics')
-        print("\n-------------- Get event_basics for 180423_1021 --------------\n")
+        print("\n----------- Get event_basics for 180423_1021 -----------\n")
         get_df(stub, '180423_1021', 'event_basics')
 
 
