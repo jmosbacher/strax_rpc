@@ -4,6 +4,7 @@ from concurrent import futures
 import numpy as np
 import pandas as pd
 import strax
+import time
 import fnmatch
 import grpc
 import strax_rpc_pb2
@@ -106,7 +107,10 @@ class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
     def GetDF(self, request, context):
         plugin_name = request.name
         run_id = request.run_id
-        df = self.ctx.get_df(run_id, plugin_name) #fake_df() #
+        try:
+            df = self.ctx.get_df(run_id, plugin_name) #
+        except:
+            df = fake_df() #
         for col in df_to_columns(df):
             yield col
 
