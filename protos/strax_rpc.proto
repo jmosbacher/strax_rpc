@@ -4,10 +4,11 @@ package straxrpc;
 
 service StraxRPC {
 
-  rpc SearchField(SearchPattern) returns (stream Match) {}
+  rpc SearchField(SearchPattern) returns (stream ColumnInfo) {}
 
-  rpc DataInfo(DataName) returns (stream Field) {}
+  rpc DataInfo(PluginInfo) returns (stream DataColumn) {}
 
+  rpc GetDF(TableInfo) returns (stream DataColumn) {}
 
 }
 
@@ -17,20 +18,69 @@ message SearchPattern {
 
 }
 
-message Match {
-  string column = 1;
-  string dataname = 2;
-  string plugin = 3;
-
-}
-
-message DataName {
+message TableInfo {
   string name = 1;
+  string run_id = 2;
+
 }
 
-message Field {
-  uint32 index = 1;
-  string name = 2;
-  string dtype = 3;
+message PluginInfo {
+  string name = 1;
+  string class_name = 2;
+  repeated ColumnInfo columns = 3;
+}
+
+
+message ColumnInfo {
+  string name  = 1;
+  string data_name = 2;
+  string plugin = 3;
   string comment = 4;
+  string dtype = 5;
+
+}
+
+
+message Int32Column {
+  repeated uint32 index = 1;
+  repeated int32 values = 2;
+}
+
+message Int64Column {
+  repeated uint32 index = 1;
+  repeated int64 values = 2;
+}
+
+message BoolColumn {
+  repeated uint32 index = 1;
+  repeated bool values = 2;
+}
+
+message Float32Column {
+  repeated uint32 index = 1;
+  repeated float values = 2;
+}
+
+message Float64Column {
+  repeated uint32 index = 1;
+  repeated double values = 2;
+}
+
+message StringColumn {
+  repeated uint32 index = 1;
+  repeated string values = 2;
+}
+
+message DataColumn {
+  ColumnInfo info = 1;
+
+  oneof data {
+    Int32Column int32 = 2;
+    Int64Column int64 = 3;
+    Float32Column float32 = 4;
+    Float64Column float64 = 5;
+    StringColumn string = 6;
+    BoolColumn bool = 7;
+    StringColumn object = 8;
+  }
 }

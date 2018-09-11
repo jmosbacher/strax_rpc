@@ -15,7 +15,42 @@ import config
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
+dcolumns = {
+  "int16": strax_rpc_pb2.Int32Column,
+  "int32": strax_rpc_pb2.Int32Column,
+  "int64": strax_rpc_pb2.Int64Column,
+  "float32":strax_rpc_pb2.Float32Column,
+  "float64":strax_rpc_pb2.Float64Column,
+  "object": strax_rpc_pb2.StringColumn,
+  "string": strax_rpc_pb2.StringColumn,
+  "bool": strax_rpc_pb2.BoolColumn,
+}
 
+def fake_df(ncol=10,nrow=100):
+    data = {}
+    for c in range(ncol):
+        data['col_{}'.format(c)] = np.random.random(nrow)
+    return pd.DataFrame(data)
+
+def df_to_columns(df):
+    cols = []
+    for name in df.columns:
+        dtype = str(df[name].dtype)
+        info = strax_rpc_pb2.ColumnInfo(
+                  name=name,
+                  dtype=dtype,
+            )
+        if dtype == "object":
+            values = df[name].astype('str').values
+        else:
+            values = df[name].values
+
+        data =  dcolumns[dtype](
+            index=df[name].index,
+            values=values,
+            )
+        cols.append(strax_rpc_pb2.DataColumn(**{'info': info, dtype:data}))
+    return cols
 
 def search_field(ctx, pattern, max_matches):
     """
@@ -42,7 +77,7 @@ class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
             storage=[strax.ZipDirectory(config.ZIPDIR),
                      strax.DataDirectory(config.DATADIR)],
             register_all=strax.xenon.plugins)
-        # self.ctx = ctx
+
 
     def SearchField(self, request, context):
         """
@@ -55,9 +90,9 @@ class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
         max_matches = request.max_matches
         match_list = search_field(self.ctx, pattern, max_matches)
         for column, dataname, plugin in match_list:
-            yield strax_rpc_pb2.Match(
-                  column=column,
-                  dataname=dataname,
+            yield strax_rpc_pb2.ColumnInfo(
+                  name=column,
+                  data_name=dataname,
                   plugin=plugin,
                  )
 
@@ -68,13 +103,16 @@ class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
       """
       dataname = request.name
       df = self.ctx.data_info(dataname)
-      for idx,row in df.iterrows():
-          yield strax_rpc_pb2.Field(
-                index=idx,
-                name=row['Field name'],
-                dtype=str(row['Data type']),
-                comment=row['Comment'],
-               )
+      for col in df_to_columns(df):
+          yield col
+
+    def GetDF(self, request, context):
+        plugin_name = request.name
+        run_id = request.run_id
+        df = self.ctx.get_df(run_id, plugin_name) #fake_df() #
+        for col in df_to_columns(df):
+            yield col
+
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     strax_rpc_pb2_grpc.add_StraxRPCServicer_to_server(
