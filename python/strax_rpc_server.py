@@ -7,8 +7,8 @@ import strax
 import time
 import fnmatch
 import grpc
-import strax_rpc_pb2
-import strax_rpc_pb2_grpc
+import strax_rpc_pb2, strax_rpc_pb2_grpc
+
 import config
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
@@ -71,6 +71,7 @@ def search_field(ctx, pattern, max_matches):
 class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
 
     def __init__(self):
+        print('Servicer started.')
         self.ctx = strax.Context(
             storage=[strax.ZipDirectory(config.ZIPDIR),
                      strax.DataDirectory(config.DATADIR)],
