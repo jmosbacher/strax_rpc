@@ -13,3 +13,4 @@ To run the server:
 To run the client:
 - pip install grpcio
 - run "python strax_rpc_client.py" or import the file and use the sample functions directly.
+- The node client can be created dynamically by grpc from the proto file. An example can be found in node/strax_rpc_client.js 
