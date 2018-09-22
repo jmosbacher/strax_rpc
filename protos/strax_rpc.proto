@@ -8,7 +8,7 @@ service StraxRPC {
 
   rpc DataInfo(PluginInfo) returns (stream DataColumn) {}
 
-  rpc GetDF(TableInfo) returns (stream DataColumn) {}
+  rpc GetDataframe(TableInfo) returns (stream DataColumn) {}
 
   rpc GetArray(TableInfo) returns (stream DataColumn) {}
 }
