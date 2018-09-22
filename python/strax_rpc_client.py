@@ -17,8 +17,8 @@ def data_info(stub, dataname):
     # rs = stub.DataInfo(pi)
     data = {}
     for col in stub.DataInfo(pi):
-        d = getattr(col, col.info.dtype)
-        data[col.info.name] = pd.Series(index=d.index, data=d.values)
+        vs = getattr(col, col.info.dtype).values
+        data[col.info.name] = pd.Series(index=col.index, data=vs)
     df = pd.DataFrame(data)
 
     # t = PrettyTable()
@@ -31,9 +31,22 @@ def get_df(stub,run_id,dframe):
     ti = strax_rpc_pb2.TableInfo(name=dframe, run_id=run_id)
     # f = strax_rpc_pb2.ColumnInfo(name='random')
     data = {}
-    for col in stub.GetDF(ti):
-        d = getattr(col, col.info.dtype)
-        data[col.info.name] = pd.Series(index=d.index, data=d.values)
+    for col in stub.GetDataframe(ti):
+        vs = getattr(col, col.info.dtype).values
+        data[col.info.name] = pd.Series(index=col.index, data=vs)
+        # print(col.info.name, ' ', col.info.dtype)
+        # for i,v in zip(r.index, r.value):
+        #     print(f'{i} : {v}')
+    df = pd.DataFrame(data)
+    print(df)
+
+def get_array(stub,run_id,dframe):
+    ti = strax_rpc_pb2.TableInfo(name=dframe, run_id=run_id)
+    # f = strax_rpc_pb2.ColumnInfo(name='random')
+    data = {}
+    for col in stub.GetArray(ti):
+        vs = getattr(col, col.info.dtype).values
+        data[col.info.name] = pd.Series(index=col.index, data=vs)
         # print(col.info.name, ' ', col.info.dtype)
         # for i,v in zip(r.index, r.value):
         #     print(f'{i} : {v}')
@@ -47,8 +60,10 @@ def run():
         search_field(stub, "s1*")
         print("\n-------------- Data Info for event_basics --------------\n")
         data_info(stub, 'event_basics')
-        print("\n----------- Get event_basics for 180423_1021 -----------\n")
+        print("\n--------- Get event_basics df for 180423_1021 ---------\n")
         get_df(stub, '180423_1021', 'event_basics')
+        print("\n--------- Get event_basics array for 180423_1021 ---------\n")
+        get_array(stub, '180423_1021', 'event_basics')
 
 
 if __name__ == '__main__':

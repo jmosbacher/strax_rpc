@@ -8,51 +8,72 @@ import time
 import fnmatch
 import grpc
 import strax_rpc_pb2, strax_rpc_pb2_grpc
-
+from data_types import type_testers
 import config
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
-dcolumns = {
-  "int16": strax_rpc_pb2.Int32Column,
-  "int32": strax_rpc_pb2.Int32Column,
-  "int64": strax_rpc_pb2.Int64Column,
-  "float32":strax_rpc_pb2.Float32Column,
-  "float64":strax_rpc_pb2.Float64Column,
-  "object": strax_rpc_pb2.StringColumn,
-  "string": strax_rpc_pb2.StringColumn,
-  "bool": strax_rpc_pb2.BoolColumn,
-}
 
-def fake_df(ncol=10,nrow=100):
+
+def fake_df(ncol=10,nrow=10):
     data = {}
     for c in range(ncol):
         data['col_{}'.format(c)] = np.random.random(nrow)
     return pd.DataFrame(data)
 
+def fake_arr(ncol=10,nrow=10):
+    a = np.random.random((nrow,ncol))
+    a.dtype=np.dtype([(('random column number {}'.format(c),'col_{}'.format(c)),np.float64) for c in range(ncol)])
+    return a
+
 def df_to_columns(df):
     cols = []
     for name in df.columns:
-        dtype = str(df[name].dtype)
+        dtype_name = str(df[name].dtype)
+        for tester in type_testers:
+            if tester.test(dtype_name):
+                break
+        else:
+            continue
+
         info = strax_rpc_pb2.ColumnInfo(
                   name=name,
-                  dtype=dtype,
+                  dtype=tester.name,
             )
-        if dtype == "object":
-            values = df[name].astype('str').values
-        else:
-            values = df[name].values
+        try:
+            values = tester.cast(df[name].values)
+            data =  getattr(strax_rpc_pb2,tester.column_class)(values=values)
+            col_params = {'info': info, "index":df[name].index, tester.name:data}
+            cols.append(strax_rpc_pb2.DataColumn(**col_params))
+        except:
+            print("Could not transfer columns {}".format(name))
+    return cols
 
-        data =  dcolumns[dtype](
-            index=df[name].index,
-            values=values,
+def arr_to_columns(arr):
+    cols = []
+    for i, name in enumerate(arr.dtype.names):
+        dtype_name = str(arr.dtype[i])
+        for tester in type_testers:
+            if tester.test(dtype_name):
+                break
+        else:
+            continue
+
+        info = strax_rpc_pb2.ColumnInfo(
+                  name=name,
+                  dtype=tester.name,
             )
-        cols.append(strax_rpc_pb2.DataColumn(**{'info': info, dtype:data}))
+        values = arr[name].flatten()
+        index = np.array(range(values.size), dtype=np.uint32)
+        data =  getattr(strax_rpc_pb2, tester.column_class)(values=values)
+        col_params = {'info': info, "index":index, tester.name:data}
+        cols.append(strax_rpc_pb2.DataColumn(**col_params))
     return cols
 
 def search_field(ctx, pattern, max_matches):
     """
-    Temporary fix
+    Temporary fix, need to add pull request to have a flag to change this methods
+    behavior so it returns a machine readable structure instead of printing to stdout.
     """
     match_list = []
     cache = dict()
@@ -105,7 +126,7 @@ class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
       for col in df_to_columns(df):
           yield col
 
-    def GetDF(self, request, context):
+    def GetDataframe(self, request, context):
         plugin_name = request.name
         run_id = request.run_id
         try:
@@ -113,6 +134,16 @@ class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
         except:
             df = fake_df() #
         for col in df_to_columns(df):
+            yield col
+
+    def GetArray(self, request, context):
+        plugin_name = request.name
+        run_id = request.run_id
+        try:
+            arr = self.ctx.get_array(run_id, plugin_name) #
+        except:
+            arr = fake_arr() #
+        for col in arr_to_columns(arr):
             yield col
 
 def serve():
