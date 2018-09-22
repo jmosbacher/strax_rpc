@@ -1,6 +1,6 @@
 from __future__ import print_function
 import grpc
-from autogen_code import strax_rpc_pb2, strax_rpc_pb2_grpc
+import strax_rpc_pb2, strax_rpc_pb2_grpc
 import pandas as pd
 
 def search_field(stub, pattern, max_matches=10):
