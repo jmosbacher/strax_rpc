@@ -10,6 +10,7 @@ service StraxRPC {
 
   rpc GetDF(TableInfo) returns (stream DataColumn) {}
 
+  rpc GetArray(TableInfo) returns (stream DataColumn) {}
 }
 
 message SearchPattern {
@@ -41,46 +42,63 @@ message ColumnInfo {
 }
 
 
-message Int32Column {
-  repeated uint32 index = 1;
-  repeated int32 values = 2;
+message Int32Array {
+  repeated int32 values = 1;
 }
 
-message Int64Column {
-  repeated uint32 index = 1;
-  repeated int64 values = 2;
+message Int64Array {
+  repeated int64 values = 1;
 }
 
-message BoolColumn {
-  repeated uint32 index = 1;
-  repeated bool values = 2;
+message Int32ArrayArray {
+  repeated Int32Array values = 1;
 }
 
-message Float32Column {
-  repeated uint32 index = 1;
-  repeated float values = 2;
+message Int64ArrayArray {
+  repeated Int64Array values = 1;
 }
 
-message Float64Column {
-  repeated uint32 index = 1;
-  repeated double values = 2;
+message BoolArray {
+  repeated bool values = 1;
 }
 
-message StringColumn {
-  repeated uint32 index = 1;
-  repeated string values = 2;
+message Float32Array {
+  repeated float values = 1;
 }
+
+message Float64Array {
+  repeated double values = 1;
+}
+
+message Float32ArrayArray {
+  repeated Float32Array values = 1;
+}
+
+message Float64ArrayArray {
+  repeated Float64Array values = 1;
+}
+
+message StringArray {
+  repeated string values = 1;
+}
+
+
 
 message DataColumn {
-  ColumnInfo info = 1;
-
+  ColumnInfo info = 99;
+  repeated uint32 index = 1;
   oneof data {
-    Int32Column int32 = 2;
-    Int64Column int64 = 3;
-    Float32Column float32 = 4;
-    Float64Column float64 = 5;
-    StringColumn string = 6;
-    BoolColumn bool = 7;
-    StringColumn object = 8;
+    Int32Array int32 = 2;
+    Int64Array int64 = 3;
+    Float32Array float32 = 4;
+    Float64Array float64 = 5;
+    StringArray string = 6;
+    BoolArray bool = 7;
+    StringArray object = 8;
+    Float32ArrayArray float32array = 9;
+    Float64ArrayArray float64array = 10;
+    Int32ArrayArray int32array = 11;
+    Int64ArrayArray int64array = 12;
   }
 }
+

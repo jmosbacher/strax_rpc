@@ -24,8 +24,13 @@ class StraxRPCStub(object):
         request_serializer=strax__rpc__pb2.PluginInfo.SerializeToString,
         response_deserializer=strax__rpc__pb2.DataColumn.FromString,
         )
-    self.GetDF = channel.unary_stream(
-        '/straxrpc.StraxRPC/GetDF',
+    self.GetDataframe = channel.unary_stream(
+        '/straxrpc.StraxRPC/GetDataframe',
+        request_serializer=strax__rpc__pb2.TableInfo.SerializeToString,
+        response_deserializer=strax__rpc__pb2.DataColumn.FromString,
+        )
+    self.GetArray = channel.unary_stream(
+        '/straxrpc.StraxRPC/GetArray',
         request_serializer=strax__rpc__pb2.TableInfo.SerializeToString,
         response_deserializer=strax__rpc__pb2.DataColumn.FromString,
         )
@@ -49,7 +54,14 @@ class StraxRPCServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetDF(self, request, context):
+  def GetDataframe(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetArray(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -69,8 +81,13 @@ def add_StraxRPCServicer_to_server(servicer, server):
           request_deserializer=strax__rpc__pb2.PluginInfo.FromString,
           response_serializer=strax__rpc__pb2.DataColumn.SerializeToString,
       ),
-      'GetDF': grpc.unary_stream_rpc_method_handler(
-          servicer.GetDF,
+      'GetDataframe': grpc.unary_stream_rpc_method_handler(
+          servicer.GetDataframe,
+          request_deserializer=strax__rpc__pb2.TableInfo.FromString,
+          response_serializer=strax__rpc__pb2.DataColumn.SerializeToString,
+      ),
+      'GetArray': grpc.unary_stream_rpc_method_handler(
+          servicer.GetArray,
           request_deserializer=strax__rpc__pb2.TableInfo.FromString,
           response_serializer=strax__rpc__pb2.DataColumn.SerializeToString,
       ),
