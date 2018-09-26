@@ -7,9 +7,10 @@ import strax
 import time
 import fnmatch
 import grpc
-import strax_rpc_pb2, strax_rpc_pb2_grpc
-from data_types import type_testers
-import config
+from . import straxrpc_pb2
+from . import straxrpc_pb2_grpc
+from .data_types import type_testers
+from . import config
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
@@ -36,15 +37,15 @@ def df_to_columns(df):
         else:
             continue
 
-        info = strax_rpc_pb2.ColumnInfo(
+        info = straxrpc_pb2.ColumnInfo(
                   name=name,
                   dtype=tester.name,
             )
         try:
             values = tester.cast(df[name].values)
-            data =  getattr(strax_rpc_pb2,tester.column_class)(values=values)
+            data =  getattr(straxrpc_pb2,tester.column_class)(values=values)
             col_params = {'info': info, "index":df[name].index, tester.name:data}
-            cols.append(strax_rpc_pb2.DataColumn(**col_params))
+            cols.append(straxrpc_pb2.DataColumn(**col_params))
         except:
             print("Could not transfer columns {}".format(name))
     return cols
@@ -59,15 +60,15 @@ def arr_to_columns(arr):
         else:
             continue
 
-        info = strax_rpc_pb2.ColumnInfo(
+        info = straxrpc_pb2.ColumnInfo(
                   name=name,
                   dtype=tester.name,
             )
         values = arr[name].flatten()
         index = np.array(range(values.size), dtype=np.uint32)
-        data =  getattr(strax_rpc_pb2, tester.column_class)(values=values)
+        data =  getattr(straxrpc_pb2, tester.column_class)(values=values)
         col_params = {'info': info, "index":index, tester.name:data}
-        cols.append(strax_rpc_pb2.DataColumn(**col_params))
+        cols.append(straxrpc_pb2.DataColumn(**col_params))
     return cols
 
 def search_field(ctx, pattern, max_matches):
@@ -89,7 +90,7 @@ def search_field(ctx, pattern, max_matches):
                 match_list.append((field_name, d, p.__class__.__name__))
     return match_list
 
-class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
+class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
 
     def __init__(self):
         print('Servicer started.')
@@ -110,7 +111,7 @@ class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
         max_matches = request.max_matches
         match_list = search_field(self.ctx, pattern, max_matches)
         for column, dataname, plugin in match_list:
-            yield strax_rpc_pb2.ColumnInfo(
+            yield straxrpc_pb2.ColumnInfo(
                   name=column,
                   data_name=dataname,
                   plugin=plugin,
@@ -146,18 +147,36 @@ class StraxRPCServicer(strax_rpc_pb2_grpc.StraxRPCServicer):
         for col in arr_to_columns(arr):
             yield col
 
-def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    strax_rpc_pb2_grpc.add_StraxRPCServicer_to_server(
-        StraxRPCServicer(), server)
-    server.add_insecure_port('[::]:50051')
-    server.start()
-    try:
-        while True:
-            time.sleep(_ONE_DAY_IN_SECONDS)
-    except KeyboardInterrupt:
-        server.stop(0)
+    def SearchDataframeNames(self, request, context):
+        pattern = request.pattern
+        max_matches = request.max_matches
+        match_list = []
+        for d in self.ctx._plugin_class_registry:
+            if fnmatch.fnmatch(d, pattern):
+                match_list.append(d)
+                if max_matches and len(match_list)>=max_matches:
+                    break
+        for match in match_list:
+            yield straxrpc_pb2.PluginInfo(name=match,)
 
+class StraxServer:
+    def __init__(self, addr="localhost", port=50051):
+        self.addr = addr
+        self.port = port
+
+    def serve(self):
+        server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+        straxrpc_pb2_grpc.add_StraxRPCServicer_to_server(
+            StraxRPCServicer(), server)
+        server.add_insecure_port('{}:{}'.format(self.addr, self.port))
+        server.start()
+        try:
+            while True:
+                time.sleep(_ONE_DAY_IN_SECONDS)
+        except KeyboardInterrupt:
+            server.stop(0)
 
 if __name__ == '__main__':
-    serve()
+    from straxrpc import StraxServer
+    server = StraxServer()
+    server.serve()

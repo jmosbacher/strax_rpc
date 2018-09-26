@@ -4,13 +4,28 @@ package straxrpc;
 
 service StraxRPC {
 
+
+
   rpc SearchField(SearchPattern) returns (stream ColumnInfo) {}
+
+  rpc SearchDataframeNames(SearchPattern) returns (stream PluginInfo) {}
 
   rpc DataInfo(PluginInfo) returns (stream DataColumn) {}
 
   rpc GetDataframe(TableInfo) returns (stream DataColumn) {}
 
   rpc GetArray(TableInfo) returns (stream DataColumn) {}
+}
+
+
+message Config {
+    string pax_raw_dir = 1;
+    string input_dir = 2;
+}
+
+message Context {
+    repeated string plugins = 1;
+    Config config = 2;
 }
 
 message SearchPattern {

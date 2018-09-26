@@ -2,8 +2,8 @@ from grpc_tools import protoc
 
 protoc.main((
     '',
-    '-I../protos',
-    '--python_out=.',
-    '--grpc_python_out=.',
-    '../protos/strax_rpc.proto',
+    '-I../protos/',
+    '--python_out=./straxrpc/',
+    '--grpc_python_out=./straxrpc/',
+    '../protos/straxrpc/straxrpc.proto',
 ))
