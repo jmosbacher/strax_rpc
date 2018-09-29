@@ -71,7 +71,7 @@ def arr_to_columns(arr):
         cols.append(straxrpc_pb2.DataColumn(**col_params))
     return cols
 
-def search_field(ctx, pattern, max_matches):
+def search_field(ctx, pattern):
     """
     Temporary fix, need to add pull request to have a flag to change this methods
     behavior so it returns a machine readable structure instead of printing to stdout.
@@ -85,19 +85,15 @@ def search_field(ctx, pattern, max_matches):
 
         for field_name in p.dtype.names:
             if fnmatch.fnmatch(field_name, pattern):
-                if max_matches and len(match_list)>=max_matches:
-                    return match_list
                 match_list.append((field_name, d, p.__class__.__name__))
     return match_list
 
 class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
 
-    def __init__(self):
+    def __init__(self, strax_context):
         print('Servicer started.')
-        self.ctx = strax.Context(
-            storage=[strax.ZipDirectory(config.ZIPDIR),
-                     strax.DataDirectory(config.DATADIR)],
-            register_all=strax.xenon.plugins)
+        self.ctx = strax_context
+        
 
 
     def SearchField(self, request, context):
@@ -108,8 +104,8 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
         """
 
         pattern = request.pattern
-        max_matches = request.max_matches
-        match_list = search_field(self.ctx, pattern, max_matches)
+   
+        match_list = search_field(self.ctx, pattern)
         for column, dataname, plugin in match_list:
             yield straxrpc_pb2.ColumnInfo(
                   name=column,
@@ -149,26 +145,25 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
 
     def SearchDataframeNames(self, request, context):
         pattern = request.pattern
-        max_matches = request.max_matches
-        match_list = []
         for d in self.ctx._plugin_class_registry:
             if fnmatch.fnmatch(d, pattern):
-                match_list.append(d)
-                if max_matches and len(match_list)>=max_matches:
-                    break
-        for match in match_list:
-            yield straxrpc_pb2.PluginInfo(name=match,)
+                yield straxrpc_pb2.PluginInfo(name=d,)
+
+    def ShowConfig(self, request, context):
+        name = request.name
+        df = self.ctx.show_config(name)
+        for col in df_to_columns(df):
+            yield col
 
 class StraxServer:
-    def __init__(self, addr="localhost", port=50051):
+    def __init__(self, addr="localhost:50051", strax_context=None):
         self.addr = addr
-        self.port = port
 
-    def serve(self):
+    def serve(self, strax_context):
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         straxrpc_pb2_grpc.add_StraxRPCServicer_to_server(
-            StraxRPCServicer(), server)
-        server.add_insecure_port('{}:{}'.format(self.addr, self.port))
+            StraxRPCServicer(strax_context), server)
+        server.add_insecure_port(self.addr)
         server.start()
         try:
             while True:
@@ -179,4 +174,8 @@ class StraxServer:
 if __name__ == '__main__':
     from straxrpc import StraxServer
     server = StraxServer()
-    server.serve()
+    ctx = strax.Context(
+            storage=[strax.ZipDirectory(config.ZIPDIR),
+                     strax.DataDirectory(config.DATADIR)],
+            register_all=strax.xenon.plugins) 
+    server.serve(ctx)

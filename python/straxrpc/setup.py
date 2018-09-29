@@ -12,6 +12,10 @@ setup(name='straxrpc',
           'grpcio',
           'numpy',
           'pandas',
-        #   'fnmatch',
+        #   ,
       ],
+      extra_requires={
+          "server": ['strax',
+                    'fnmatch',]
+      },
       zip_safe=False)

@@ -7,36 +7,32 @@ import numpy as np
 
 
 class StraxClient:
-    def __init__(self, addr="localhost", port=50051):
+    def __init__(self, addr="localhost:50051"):
         self.addr = addr
-        self.port = port
 
-    def search_field(self, pattern, max_matches=10):
-         with grpc.insecure_channel('{}:{}'.format(self.addr,self.port)) as channel:
+    def search_field(self, pattern):
+         with grpc.insecure_channel(self.addr) as channel:
             stub = straxrpc_pb2_grpc.StraxRPCStub(channel)
-            sp = straxrpc_pb2.SearchPattern(
-                pattern=pattern,
-                max_matches=max_matches,
-            )
+            sp = straxrpc_pb2.SearchPattern(pattern=pattern)
             rs = stub.SearchField(sp)
             results = [f"{r.name} is part of {r.data_name} (provided by {r.plugin})" for r in rs]
             # print(results)
             return results
 
     def data_info(self,dataname):
-        with grpc.insecure_channel('{}:{}'.format(self.addr,self.port)) as channel:
+        with grpc.insecure_channel(self.addr) as channel:
             stub = straxrpc_pb2_grpc.StraxRPCStub(channel)
-            pi = straxrpc_pb2.PluginInfo(name=dataname)
+            ti = straxrpc_pb2.TableInfo(name=dataname)
         
             data = {}
-            for col in stub.DataInfo(pi):
+            for col in stub.DataInfo(ti):
                 vs = getattr(col, col.info.dtype).values
                 data[col.info.name] = pd.Series(index=col.index, data=vs)
             df = pd.DataFrame(data)
             return df
 
     def get_df(self, run_id, dframe):
-        with grpc.insecure_channel('{}:{}'.format(self.addr,self.port)) as channel:
+       with grpc.insecure_channel(self.addr) as channel:
             stub = straxrpc_pb2_grpc.StraxRPCStub(channel)
             ti = straxrpc_pb2.TableInfo(name=dframe, run_id=run_id)
             data = {}
@@ -47,7 +43,7 @@ class StraxClient:
             return df
 
     def get_array(self, run_id, dframe):
-        with grpc.insecure_channel('{}:{}'.format(self.addr,self.port)) as channel:
+        with grpc.insecure_channel(self.addr) as channel:
             stub = straxrpc_pb2_grpc.StraxRPCStub(channel)
             ti = straxrpc_pb2.TableInfo(name=dframe, run_id=run_id)
             # f = straxrpc_pb2.ColumnInfo(name='random')
@@ -65,17 +61,25 @@ class StraxClient:
             arr = np.fromiter(zip(*data), dtype=dtype)
             return arr
 
-    def search_dataframe_names(self, pattern, max_matches=10):
-        with grpc.insecure_channel('{}:{}'.format(self.addr,self.port)) as channel:
+    def search_dataframe_names(self, pattern):
+        with grpc.insecure_channel(self.addr) as channel:
             stub = straxrpc_pb2_grpc.StraxRPCStub(channel)
-            sp = straxrpc_pb2.SearchPattern(
-                pattern=pattern,
-                max_matches=max_matches,
-            )
+            sp = straxrpc_pb2.SearchPattern(pattern=pattern,)
             rs = stub.SearchDataframeNames(sp)
             names = [x.name for x in rs]
-            print(names)
+            # print(names)
             return names
+
+    def show_config(self, name):
+        with grpc.insecure_channel(self.addr) as channel:
+            stub = straxrpc_pb2_grpc.StraxRPCStub(channel)
+            ti = straxrpc_pb2.TableInfo(name=name)
+            data = {}
+            for col in stub.ShowConfig(ti):
+                vs = getattr(col, col.info.dtype).values
+                data[col.info.name] = pd.Series(index=col.index, data=vs)
+            df = pd.DataFrame(data)
+            return df
 
 def run():
     client = StraxClient()

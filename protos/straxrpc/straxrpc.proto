@@ -10,11 +10,14 @@ service StraxRPC {
 
   rpc SearchDataframeNames(SearchPattern) returns (stream PluginInfo) {}
 
-  rpc DataInfo(PluginInfo) returns (stream DataColumn) {}
+  rpc DataInfo(TableInfo) returns (stream DataColumn) {}
 
   rpc GetDataframe(TableInfo) returns (stream DataColumn) {}
 
   rpc GetArray(TableInfo) returns (stream DataColumn) {}
+
+  rpc ShowConfig(TableInfo) returns (stream DataColumn) {}
+
 }
 
 
@@ -23,20 +26,14 @@ message Config {
     string input_dir = 2;
 }
 
-message Context {
-    repeated string plugins = 1;
-    Config config = 2;
-}
-
 message SearchPattern {
     string pattern = 1;
-    uint32 max_matches = 2;
-
 }
 
 message TableInfo {
   string name = 1;
   string run_id = 2;
+  repeated ColumnInfo columns = 3;
 
 }
 
@@ -114,6 +111,11 @@ message DataColumn {
     Float64ArrayArray float64array = 10;
     Int32ArrayArray int32array = 11;
     Int64ArrayArray int64array = 12;
+
   }
 }
 
+message StraxConfig {
+  StringArray names = 1;
+  DataColumn values = 2;
+}

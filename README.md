@@ -7,8 +7,21 @@ To run the server:
 - pip install:
    - strax
    - grpcio
-- Change the location of the sample files in config.py
-- run "python strax_rpc_server.py"
+   - straxrpc
+
+- Run a Python script with the following code:
+``` python
+    
+    from straxrpc import StraxServer
+    import strax
+    server = StraxServer()
+    ctx = strax.Context(
+            storage=[strax.ZipDirectory('./processed'),
+                     strax.DataDirectory('./custom_data')],
+            register_all=strax.xenon.plugins)
+    server.serve(ctx)
+
+```
 
 To run the client:
 - pip install grpcio
