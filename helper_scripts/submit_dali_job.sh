@@ -7,8 +7,8 @@
 #SBATCH --time=2:00:00
 
 #SBATCH --account=pi-lgrandi
-#SBATCH --partition=dali
-#SBATCH --qos=dali
+#SBATCH --partition=xenon1t,broadwl
+#SBATCH --qos=xenon1t
 
 #SBATCH --output=straxui/straxui-log-%J.txt
 #SBATCH --error=straxui/straxui-log-%J.txt
