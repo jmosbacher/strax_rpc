@@ -10,7 +10,6 @@ import grpc
 from . import straxrpc_pb2
 from . import straxrpc_pb2_grpc
 from .data_types import type_testers
-from . import config
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
@@ -20,6 +19,10 @@ def fake_df(ncol=10,nrow=10):
     data = {}
     for c in range(ncol):
         data['col_{}'.format(c)] = np.random.random(nrow)
+    return pd.DataFrame(data)
+    
+def empty_df(columns):
+    data = {col:[] for col in columns}
     return pd.DataFrame(data)
 
 def fake_arr(ncol=10,nrow=10):
@@ -129,7 +132,8 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
         try:
             df = self.ctx.get_df(run_id, plugin_name) #
         except:
-            df = fake_df() #
+            columns = self.ctx.data_info(plugin_name)["Field name"].values
+            df = empty_df(columns) #
         for col in df_to_columns(df):
             yield col
 

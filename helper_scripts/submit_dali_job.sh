@@ -4,7 +4,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=4480
 
-#SBATCH --time=2:00:00
+#SBATCH --time=24:00:00
 
 #SBATCH --account=pi-lgrandi
 #SBATCH --partition=dali
@@ -26,25 +26,26 @@ python ./straxui/run_straxrpc_server.py &
 
 #### Start up a straxui server ####
 
-# source deactivate
-# source activate straxui_test
-
 export BOKEH_SECRET_KEY=$(bokeh secret)
 export BOKEH_SIGN_SESSIONS=true
 ipnport=$(shuf -i8000-9999 -n1)
 ipnip=$(hostname -i)
-sessionid=$(python ./straxui/gen_session.py)
+sessionid1=$(python ./straxui/gen_session.py)
+sessionid2=$(python ./straxui/gen_session.py)
+sessionid3=$(python ./straxui/gen_session.py)
 
 echo -e "
     Copy/Paste this in your local terminal to ssh tunnel with remote
-    -----------------------------------------------------------------
+    ----------------------------------------------------------------------------
     ssh -N -f -L $ipnport:$ipnip:$ipnport ${USER}@midway2.rcc.uchicago.edu
-    -----------------------------------------------------------------
+    ----------------------------------------------------------------------------
 
-    Then open a browser on your local machine to the following address
-    ------------------------------------------------------------------
-    localhost:$ipnport/straxui?bokeh-session-id=$sessionid
-    ------------------------------------------------------------------
+    Then open a browser on your local machine to one of the following addresses:
+    ----------------------------------------------------------------------------
+    localhost:$ipnport/straxui?bokeh-session-id=$sessionid1
+    localhost:$ipnport/straxui?bokeh-session-id=$sessionid2
+    localhost:$ipnport/straxui?bokeh-session-id=$sessionid3
+    ----------------------------------------------------------------------------
     You can also sign a new session id using the secret key for this session:
     $BOKEH_SECRET_KEY
     This key will only be valid for this job.
