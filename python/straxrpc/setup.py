@@ -12,6 +12,7 @@ setup(name='straxrpc',
           'grpcio',
           'numpy',
           'pandas',
+          'protobuf',
         #   ,
       ],
       extra_requires={
