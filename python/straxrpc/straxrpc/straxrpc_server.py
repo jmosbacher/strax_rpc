@@ -3,7 +3,6 @@
 from concurrent import futures
 import numpy as np
 import pandas as pd
-import strax
 import time
 import fnmatch
 import grpc
@@ -20,7 +19,7 @@ def fake_df(ncol=10,nrow=10):
     for c in range(ncol):
         data['col_{}'.format(c)] = np.random.random(nrow)
     return pd.DataFrame(data)
-    
+
 def empty_df(columns):
     data = {col:[] for col in columns}
     return pd.DataFrame(data)
@@ -179,7 +178,6 @@ if __name__ == '__main__':
     from straxrpc import StraxServer
     server = StraxServer()
     ctx = strax.Context(
-            storage=[strax.ZipDirectory(config.ZIPDIR),
-                     strax.DataDirectory(config.DATADIR)],
+            storage=[],
             register_all=strax.xenon.plugins) 
     server.serve(ctx)

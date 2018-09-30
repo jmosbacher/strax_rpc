@@ -22,7 +22,7 @@ export PATH=/home/mosbacher/anaconda3/bin:$PATH
 
 # source activate strax_test
 source /dali/lgrandi/tunnell/s3_osg.sh
-python ./straxui/run_straxrpc_server.py &
+python ./strax_rpc/helper_scripts/run_straxrpc_server.py &
 
 #### Start up a straxui server ####
 

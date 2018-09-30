@@ -1,6 +1,7 @@
 import numpy as np
 import re
 
+# supported types 
 
 simple_types = [
 #   name, aliases, columns_class name
