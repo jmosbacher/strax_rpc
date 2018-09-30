@@ -5,7 +5,7 @@ if __name__ == '__main__':
         server = StraxServer()
         st = strax.Context(register_all=strax.xenon.plugins,
                    storage=[
-                        strax.DataDirectory('/home/mosbacher/strax_data', readonly=True),
+                        strax.DataDirectory('/home/mosbacher/custom_data', readonly=True),
                         # strax.SimpleS3Store(readonly=True),
                            ],
                    config={'pax_raw_dir' : './'}) # Does nothing
