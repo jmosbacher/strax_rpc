@@ -19,14 +19,16 @@ cd /home/mosbacher
 export PATH=/home/mosbacher/anaconda3/bin:$PATH
 
 #### Start up a straxrpc server ####
+
 source activate strax_test
+source /dali/lgrandi/tunnell/s3_osg.sh
 python ./straxui/run_straxrpc_server.py &
 
 #### Start up a straxui server ####
 
 source deactivate
 source activate straxui_test
-source /dali/lgrandi/tunnell/s3_osg.sh
+
 export BOKEH_SECRET_KEY=$(bokeh secret)
 export BOKEH_SIGN_SESSIONS=true
 ipnport=$(shuf -i8000-9999 -n1)
