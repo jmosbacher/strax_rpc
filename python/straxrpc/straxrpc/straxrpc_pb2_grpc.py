@@ -27,22 +27,22 @@ class StraxRPCStub(object):
     self.DataInfo = channel.unary_stream(
         '/straxrpc.StraxRPC/DataInfo',
         request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
-        response_deserializer=straxrpc_dot_straxrpc__pb2.DataColumn.FromString,
+        response_deserializer=straxrpc_dot_straxrpc__pb2.TableValue.FromString,
         )
     self.GetDataframe = channel.unary_stream(
         '/straxrpc.StraxRPC/GetDataframe',
         request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
-        response_deserializer=straxrpc_dot_straxrpc__pb2.DataColumn.FromString,
+        response_deserializer=straxrpc_dot_straxrpc__pb2.TableValue.FromString,
         )
     self.GetArray = channel.unary_stream(
         '/straxrpc.StraxRPC/GetArray',
         request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
-        response_deserializer=straxrpc_dot_straxrpc__pb2.DataColumn.FromString,
+        response_deserializer=straxrpc_dot_straxrpc__pb2.TableValue.FromString,
         )
     self.ShowConfig = channel.unary_stream(
         '/straxrpc.StraxRPC/ShowConfig',
         request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
-        response_deserializer=straxrpc_dot_straxrpc__pb2.DataColumn.FromString,
+        response_deserializer=straxrpc_dot_straxrpc__pb2.TableValue.FromString,
         )
 
 
@@ -108,22 +108,22 @@ def add_StraxRPCServicer_to_server(servicer, server):
       'DataInfo': grpc.unary_stream_rpc_method_handler(
           servicer.DataInfo,
           request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
-          response_serializer=straxrpc_dot_straxrpc__pb2.DataColumn.SerializeToString,
+          response_serializer=straxrpc_dot_straxrpc__pb2.TableValue.SerializeToString,
       ),
       'GetDataframe': grpc.unary_stream_rpc_method_handler(
           servicer.GetDataframe,
           request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
-          response_serializer=straxrpc_dot_straxrpc__pb2.DataColumn.SerializeToString,
+          response_serializer=straxrpc_dot_straxrpc__pb2.TableValue.SerializeToString,
       ),
       'GetArray': grpc.unary_stream_rpc_method_handler(
           servicer.GetArray,
           request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
-          response_serializer=straxrpc_dot_straxrpc__pb2.DataColumn.SerializeToString,
+          response_serializer=straxrpc_dot_straxrpc__pb2.TableValue.SerializeToString,
       ),
       'ShowConfig': grpc.unary_stream_rpc_method_handler(
           servicer.ShowConfig,
           request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
-          response_serializer=straxrpc_dot_straxrpc__pb2.DataColumn.SerializeToString,
+          response_serializer=straxrpc_dot_straxrpc__pb2.TableValue.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

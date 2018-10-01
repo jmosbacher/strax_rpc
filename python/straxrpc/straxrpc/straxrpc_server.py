@@ -29,49 +29,34 @@ def fake_arr(ncol=10,nrow=10):
     a.dtype=np.dtype([(('random column number {}'.format(c),'col_{}'.format(c)),np.float64) for c in range(ncol)])
     return a
 
-def df_to_columns(df):
-    cols = []
-    for name in df.columns:
-        dtype_name = str(df[name].dtype)
+def table_to_values(table):
+    if isinstance(table, dict):
+        keys = list(table.keys())
+        dtype_names = [str(type(table[k][0]) for k in keys)]
+    elif isinstance(table, np.ndarray):
+        keys = list(table.dtype.names)
+        dtype_names = [str(table.dtype[i]) for i, _ in enumerate(table.dtype.names)]
+    elif isinstance(table, pd.DataFrame):
+        keys = list(table.columns)
+        dtype_names = [str(table[k].dtype) for k in keys]
+    else:
+        return None
+    testers = []
+    for name in dtype_names:
         for tester in type_testers:
-            if tester.test(dtype_name):
-                break
-        else:
-            continue
+            if tester.test(name):
+                testers.append(tester)
+                break 
+    for i, vals in enumerate(zip(*[table[k] for k in keys])):
+        for k, v, t in zip(keys, vals, testers):
+            kwargs = {
+                "index": i,
+                "column": k,
+                "dtype": t.name,
+                t.name: t.cast(v),
+            }
+            yield straxrpc_pb2.TableValue(**kwargs)
 
-        info = straxrpc_pb2.ColumnInfo(
-                  name=name,
-                  dtype=tester.name,
-            )
-        try:
-            values = tester.cast(df[name].values)
-            data =  getattr(straxrpc_pb2,tester.column_class)(values=values)
-            col_params = {'info': info, "index":df[name].index, tester.name:data}
-            cols.append(straxrpc_pb2.DataColumn(**col_params))
-        except:
-            print("Could not transfer columns {}".format(name))
-    return cols
-
-def arr_to_columns(arr):
-    cols = []
-    for i, name in enumerate(arr.dtype.names):
-        dtype_name = str(arr.dtype[i])
-        for tester in type_testers:
-            if tester.test(dtype_name):
-                break
-        else:
-            continue
-
-        info = straxrpc_pb2.ColumnInfo(
-                  name=name,
-                  dtype=tester.name,
-            )
-        values = arr[name].flatten()
-        index = np.array(range(values.size), dtype=np.uint32)
-        data =  getattr(straxrpc_pb2, tester.column_class)(values=values)
-        col_params = {'info': info, "index":index, tester.name:data}
-        cols.append(straxrpc_pb2.DataColumn(**col_params))
-    return cols
 
 def search_field(ctx, pattern):
     """
@@ -122,8 +107,8 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
       """
       dataname = request.name
       df = self.ctx.data_info(dataname)
-      for col in df_to_columns(df):
-          yield col
+      for val in table_to_values(df):
+          yield val
 
     def GetDataframe(self, request, context):
         plugin_name = request.name
@@ -133,8 +118,8 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
         except:
             columns = self.ctx.data_info(plugin_name)["Field name"].values
             df = empty_df(columns) #
-        for col in df_to_columns(df):
-            yield col
+        for v in table_to_values(df):
+            yield v
 
     def GetArray(self, request, context):
         plugin_name = request.name
@@ -142,9 +127,10 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
         try:
             arr = self.ctx.get_array(run_id, plugin_name) #
         except:
-            arr = fake_arr() #
-        for col in arr_to_columns(arr):
-            yield col
+            columns = self.ctx.data_info(plugin_name)["Field name"].values
+            df = empty_df(columns) #
+        for v in table_to_values(arr):
+            yield v
 
     def SearchDataframeNames(self, request, context):
         pattern = request.pattern
@@ -155,8 +141,8 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
     def ShowConfig(self, request, context):
         name = request.name
         df = self.ctx.show_config(name)
-        for col in df_to_columns(df):
-            yield col
+        for v in table_to_values(df):
+            yield v
 
 class StraxServer:
     def __init__(self, addr="localhost:50051", strax_context=None):
@@ -174,10 +160,3 @@ class StraxServer:
         except KeyboardInterrupt:
             server.stop(0)
 
-if __name__ == '__main__':
-    from straxrpc import StraxServer
-    server = StraxServer()
-    ctx = strax.Context(
-            storage=[],
-            register_all=strax.xenon.plugins) 
-    server.serve(ctx)
