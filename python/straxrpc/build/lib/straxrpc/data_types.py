@@ -1,24 +1,25 @@
 import numpy as np
 import re
-
+from . import straxrpc_pb2
+from . import straxrpc_pb2_grpc
 # supported types 
 
 simple_types = [
 #   name, aliases, columns_class name
-    ("int32", ["int16","i4","<i4"], "Int32Array"),
-    ("int64", ["<i8","i8"], "Int64Array"),
-    ("float32", ["<f4","f4"], "Float32Array"),
-    ("float64", ["<f8","f8"], "Float64Array"),
-    ("bool", ["boolean"], "BoolArray"),
-    ("string", ["str","O","o","object"],  "StringArray"),
+    ("int32", ["int16","i4","<i4"], "int32"),
+    ("int64", ["<i8","i8"], "int64"),
+    ("float32", ["<f4","f4"], "float32"),
+    ("float64", ["<f8","f8"], "float64"),
+    ("bool", ["boolean"], "bool"),
+    ("string", ["str","O","o","object"],  "string"),
 ]
 
 simple_array_types = [
 
-    ("int32array", ["<i4","i4"], "Int32ArrayArray"),
-    ("int64array", ["<i8","i8"], "Int64ArrayArray"),
-    ("float32array", ["<f4","f4"], "Float32ArrayArray"),
-    ("float64array", ["<f8","f8"], "Float64ArrayArray"),
+    ("int32array", ["<i4","i4"], "Int32Array"),
+    ("int64array", ["<i8","i8"], "Int64Array"),
+    ("float32array", ["<f4","f4"], "Float32Array"),
+    ("float64array", ["<f8","f8"], "Float64Array"),
 ]
 
 class TypeTester:
@@ -40,8 +41,8 @@ class SimpleTester(TypeTester):
         return False
 
     def cast(self,x):
-        if self.name=='string':
-            return x.astype('str')
+        if self.name=="string":
+            return str(x)
         return x
 
 class SimpleArrayTester(TypeTester):
@@ -57,5 +58,8 @@ class SimpleArrayTester(TypeTester):
             if res:
                 return True
         return False
+
+    def cast(self, x):
+        return getattr(straxrpc_pb2, self.column_class)(value=x)
 
 type_testers = [SimpleTester(*p) for p in simple_types] + [SimpleArrayTester(*p) for p in simple_array_types]

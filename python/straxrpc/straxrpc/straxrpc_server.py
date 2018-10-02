@@ -39,6 +39,7 @@ def table_to_values(table):
     elif isinstance(table, pd.DataFrame):
         keys = list(table.columns)
         dtype_names = [str(table[k].dtype) for k in keys]
+        table = table.to_dict(orient="list")
     else:
         return None
     testers = []
@@ -55,6 +56,8 @@ def table_to_values(table):
                 "dtype": t.name,
                 t.name: t.cast(v),
             }
+            # print(kwargs)
+            # print(type(v) for v in kwargs.values())
             yield straxrpc_pb2.TableValue(**kwargs)
 
 

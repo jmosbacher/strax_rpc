@@ -37,6 +37,7 @@ message TableInfo {
 
 }
 
+
 message PluginInfo {
   string name = 1;
   string class_name = 2;
@@ -99,3 +100,16 @@ message TableValue {
   }
 }
 
+message TableRequest {
+  repeated string names = 1;
+  repeated string run_id = 2;
+  uint32 max_size = 3;
+}
+
+message ArrayChunk {
+  uint32 nrows = 1;
+  string format = 2;
+  string compression = 3;
+  bytes data = 4;
+
+}

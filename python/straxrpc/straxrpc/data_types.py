@@ -40,6 +40,10 @@ class SimpleTester(TypeTester):
             return True
         return False
 
+    def cast(self,x):
+        if self.name=="string":
+            return str(x)
+        return x
 
 class SimpleArrayTester(TypeTester):
     def __init__(self, name, aliases, column_class):

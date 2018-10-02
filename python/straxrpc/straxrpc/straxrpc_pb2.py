@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='straxrpc/straxrpc.proto',
   package='straxrpc',
   syntax='proto3',
-  serialized_pb=_b('\n\x17straxrpc/straxrpc.proto\x12\x08straxrpc\"0\n\x06\x43onfig\x12\x13\n\x0bpax_raw_dir\x18\x01 \x01(\t\x12\x11\n\tinput_dir\x18\x02 \x01(\t\" \n\rSearchPattern\x12\x0f\n\x07pattern\x18\x01 \x01(\t\"P\n\tTableInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\t\x12%\n\x07\x63olumns\x18\x03 \x03(\x0b\x32\x14.straxrpc.ColumnInfo\"U\n\nPluginInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nclass_name\x18\x02 \x01(\t\x12%\n\x07\x63olumns\x18\x03 \x03(\x0b\x32\x14.straxrpc.ColumnInfo\"]\n\nColumnInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tdata_name\x18\x02 \x01(\t\x12\x0e\n\x06plugin\x18\x03 \x01(\t\x12\x0f\n\x07\x63omment\x18\x04 \x01(\t\x12\r\n\x05\x64type\x18\x05 \x01(\t\"\x1b\n\nInt32Array\x12\r\n\x05value\x18\x01 \x03(\x05\"\x1b\n\nInt64Array\x12\r\n\x05value\x18\x01 \x03(\x03\"\x1a\n\tBoolArray\x12\r\n\x05value\x18\x01 \x03(\x08\"\x1d\n\x0c\x46loat32Array\x12\r\n\x05value\x18\x01 \x03(\x02\"\x1d\n\x0c\x46loat64Array\x12\r\n\x05value\x18\x01 \x03(\x01\"\x1c\n\x0bStringArray\x12\r\n\x05value\x18\x01 \x03(\t\"\xd6\x02\n\nTableValue\x12\x0e\n\x06\x63olumn\x18\x63 \x01(\t\x12\r\n\x05index\x18\x01 \x01(\r\x12\x0f\n\x05int32\x18\x02 \x01(\x05H\x00\x12\x0f\n\x05int64\x18\x03 \x01(\x03H\x00\x12\x11\n\x07\x66loat32\x18\x04 \x01(\x02H\x00\x12\x11\n\x07\x66loat64\x18\x05 \x01(\x01H\x00\x12\x10\n\x06string\x18\x06 \x01(\tH\x00\x12\x0e\n\x04\x62ool\x18\x07 \x01(\x08H\x00\x12.\n\x0c\x66loat32array\x18\t \x01(\x0b\x32\x16.straxrpc.Float32ArrayH\x00\x12.\n\x0c\x66loat64array\x18\n \x01(\x0b\x32\x16.straxrpc.Float64ArrayH\x00\x12*\n\nint32array\x18\x0b \x01(\x0b\x32\x14.straxrpc.Int32ArrayH\x00\x12*\n\nint64array\x18\x0c \x01(\x0b\x32\x14.straxrpc.Int64ArrayH\x00\x42\x07\n\x05value2\x89\x03\n\x08StraxRPC\x12@\n\x0bSearchField\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.ColumnInfo\"\x00\x30\x01\x12I\n\x14SearchDataframeNames\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.PluginInfo\"\x00\x30\x01\x12\x39\n\x08\x44\x61taInfo\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12=\n\x0cGetDataframe\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12\x39\n\x08GetArray\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12;\n\nShowConfig\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x17straxrpc/straxrpc.proto\x12\x08straxrpc\"0\n\x06\x43onfig\x12\x13\n\x0bpax_raw_dir\x18\x01 \x01(\t\x12\x11\n\tinput_dir\x18\x02 \x01(\t\" \n\rSearchPattern\x12\x0f\n\x07pattern\x18\x01 \x01(\t\"P\n\tTableInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\t\x12%\n\x07\x63olumns\x18\x03 \x03(\x0b\x32\x14.straxrpc.ColumnInfo\"U\n\nPluginInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nclass_name\x18\x02 \x01(\t\x12%\n\x07\x63olumns\x18\x03 \x03(\x0b\x32\x14.straxrpc.ColumnInfo\"]\n\nColumnInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tdata_name\x18\x02 \x01(\t\x12\x0e\n\x06plugin\x18\x03 \x01(\t\x12\x0f\n\x07\x63omment\x18\x04 \x01(\t\x12\r\n\x05\x64type\x18\x05 \x01(\t\"\x1b\n\nInt32Array\x12\r\n\x05value\x18\x01 \x03(\x05\"\x1b\n\nInt64Array\x12\r\n\x05value\x18\x01 \x03(\x03\"\x1a\n\tBoolArray\x12\r\n\x05value\x18\x01 \x03(\x08\"\x1d\n\x0c\x46loat32Array\x12\r\n\x05value\x18\x01 \x03(\x02\"\x1d\n\x0c\x46loat64Array\x12\r\n\x05value\x18\x01 \x03(\x01\"\x1c\n\x0bStringArray\x12\r\n\x05value\x18\x01 \x03(\t\"\xe5\x02\n\nTableValue\x12\x0e\n\x06\x63olumn\x18\x01 \x01(\t\x12\r\n\x05index\x18\x02 \x01(\r\x12\r\n\x05\x64type\x18\x03 \x01(\t\x12\x0f\n\x05int32\x18\x04 \x01(\x05H\x00\x12\x0f\n\x05int64\x18\x05 \x01(\x03H\x00\x12\x11\n\x07\x66loat32\x18\x06 \x01(\x02H\x00\x12\x11\n\x07\x66loat64\x18\x07 \x01(\x01H\x00\x12\x10\n\x06string\x18\x08 \x01(\tH\x00\x12\x0e\n\x04\x62ool\x18\t \x01(\x08H\x00\x12.\n\x0c\x66loat32array\x18\n \x01(\x0b\x32\x16.straxrpc.Float32ArrayH\x00\x12.\n\x0c\x66loat64array\x18\x0b \x01(\x0b\x32\x16.straxrpc.Float64ArrayH\x00\x12*\n\nint32array\x18\x0c \x01(\x0b\x32\x14.straxrpc.Int32ArrayH\x00\x12*\n\nint64array\x18\r \x01(\x0b\x32\x14.straxrpc.Int64ArrayH\x00\x42\x07\n\x05value2\x89\x03\n\x08StraxRPC\x12@\n\x0bSearchField\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.ColumnInfo\"\x00\x30\x01\x12I\n\x14SearchDataframeNames\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.PluginInfo\"\x00\x30\x01\x12\x39\n\x08\x44\x61taInfo\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12=\n\x0cGetDataframe\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12\x39\n\x08GetArray\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12;\n\nShowConfig\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x62\x06proto3')
 )
 
 
@@ -438,84 +438,91 @@ _TABLEVALUE = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='column', full_name='straxrpc.TableValue.column', index=0,
-      number=99, type=9, cpp_type=9, label=1,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='index', full_name='straxrpc.TableValue.index', index=1,
-      number=1, type=13, cpp_type=3, label=1,
+      number=2, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='int32', full_name='straxrpc.TableValue.int32', index=2,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='int64', full_name='straxrpc.TableValue.int64', index=3,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='float32', full_name='straxrpc.TableValue.float32', index=4,
-      number=4, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='float64', full_name='straxrpc.TableValue.float64', index=5,
-      number=5, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='string', full_name='straxrpc.TableValue.string', index=6,
-      number=6, type=9, cpp_type=9, label=1,
+      name='dtype', full_name='straxrpc.TableValue.dtype', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='bool', full_name='straxrpc.TableValue.bool', index=7,
-      number=7, type=8, cpp_type=7, label=1,
+      name='int32', full_name='straxrpc.TableValue.int32', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='int64', full_name='straxrpc.TableValue.int64', index=4,
+      number=5, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='float32', full_name='straxrpc.TableValue.float32', index=5,
+      number=6, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='float64', full_name='straxrpc.TableValue.float64', index=6,
+      number=7, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='string', full_name='straxrpc.TableValue.string', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='bool', full_name='straxrpc.TableValue.bool', index=8,
+      number=9, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='float32array', full_name='straxrpc.TableValue.float32array', index=8,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='float64array', full_name='straxrpc.TableValue.float64array', index=9,
+      name='float32array', full_name='straxrpc.TableValue.float32array', index=9,
       number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='int32array', full_name='straxrpc.TableValue.int32array', index=10,
+      name='float64array', full_name='straxrpc.TableValue.float64array', index=10,
       number=11, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='int64array', full_name='straxrpc.TableValue.int64array', index=11,
+      name='int32array', full_name='straxrpc.TableValue.int32array', index=11,
       number=12, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='int64array', full_name='straxrpc.TableValue.int64array', index=12,
+      number=13, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -536,7 +543,7 @@ _TABLEVALUE = _descriptor.Descriptor(
       index=0, containing_type=None, fields=[]),
   ],
   serialized_start=564,
-  serialized_end=906,
+  serialized_end=921,
 )
 
 _TABLEINFO.fields_by_name['columns'].message_type = _COLUMNINFO
@@ -681,8 +688,8 @@ _STRAXRPC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=909,
-  serialized_end=1302,
+  serialized_start=924,
+  serialized_end=1317,
   methods=[
   _descriptor.MethodDescriptor(
     name='SearchField',
