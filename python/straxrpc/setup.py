@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='straxrpc',
-      version='0.2.1',
+      version='0.3',
       description='An RPC service for strax',
       url='http://github.com/jmosbacher/straxrpc',
       author='Yossi Mosbacher',
