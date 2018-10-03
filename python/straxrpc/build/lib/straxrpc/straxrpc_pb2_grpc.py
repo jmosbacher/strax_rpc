@@ -24,25 +24,20 @@ class StraxRPCStub(object):
         request_serializer=straxrpc_dot_straxrpc__pb2.SearchPattern.SerializeToString,
         response_deserializer=straxrpc_dot_straxrpc__pb2.PluginInfo.FromString,
         )
-    self.DataInfo = channel.unary_stream(
+    self.DataInfo = channel.unary_unary(
         '/straxrpc.StraxRPC/DataInfo',
         request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
-        response_deserializer=straxrpc_dot_straxrpc__pb2.TableValue.FromString,
-        )
-    self.GetDataframe = channel.unary_stream(
-        '/straxrpc.StraxRPC/GetDataframe',
-        request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
-        response_deserializer=straxrpc_dot_straxrpc__pb2.TableValue.FromString,
+        response_deserializer=straxrpc_dot_straxrpc__pb2.Dataframe.FromString,
         )
     self.GetArray = channel.unary_stream(
         '/straxrpc.StraxRPC/GetArray',
-        request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
-        response_deserializer=straxrpc_dot_straxrpc__pb2.TableValue.FromString,
+        request_serializer=straxrpc_dot_straxrpc__pb2.TableRequest.SerializeToString,
+        response_deserializer=straxrpc_dot_straxrpc__pb2.ArrayChunk.FromString,
         )
-    self.ShowConfig = channel.unary_stream(
+    self.ShowConfig = channel.unary_unary(
         '/straxrpc.StraxRPC/ShowConfig',
         request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
-        response_deserializer=straxrpc_dot_straxrpc__pb2.TableValue.FromString,
+        response_deserializer=straxrpc_dot_straxrpc__pb2.Dataframe.FromString,
         )
 
 
@@ -65,13 +60,6 @@ class StraxRPCServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def DataInfo(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetDataframe(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -105,25 +93,20 @@ def add_StraxRPCServicer_to_server(servicer, server):
           request_deserializer=straxrpc_dot_straxrpc__pb2.SearchPattern.FromString,
           response_serializer=straxrpc_dot_straxrpc__pb2.PluginInfo.SerializeToString,
       ),
-      'DataInfo': grpc.unary_stream_rpc_method_handler(
+      'DataInfo': grpc.unary_unary_rpc_method_handler(
           servicer.DataInfo,
           request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
-          response_serializer=straxrpc_dot_straxrpc__pb2.TableValue.SerializeToString,
-      ),
-      'GetDataframe': grpc.unary_stream_rpc_method_handler(
-          servicer.GetDataframe,
-          request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
-          response_serializer=straxrpc_dot_straxrpc__pb2.TableValue.SerializeToString,
+          response_serializer=straxrpc_dot_straxrpc__pb2.Dataframe.SerializeToString,
       ),
       'GetArray': grpc.unary_stream_rpc_method_handler(
           servicer.GetArray,
-          request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
-          response_serializer=straxrpc_dot_straxrpc__pb2.TableValue.SerializeToString,
+          request_deserializer=straxrpc_dot_straxrpc__pb2.TableRequest.FromString,
+          response_serializer=straxrpc_dot_straxrpc__pb2.ArrayChunk.SerializeToString,
       ),
-      'ShowConfig': grpc.unary_stream_rpc_method_handler(
+      'ShowConfig': grpc.unary_unary_rpc_method_handler(
           servicer.ShowConfig,
           request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
-          response_serializer=straxrpc_dot_straxrpc__pb2.TableValue.SerializeToString,
+          response_serializer=straxrpc_dot_straxrpc__pb2.Dataframe.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

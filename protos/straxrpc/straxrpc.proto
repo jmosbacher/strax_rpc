@@ -10,13 +10,11 @@ service StraxRPC {
 
   rpc SearchDataframeNames(SearchPattern) returns (stream PluginInfo) {}
 
-  rpc DataInfo(TableInfo) returns (stream TableValue) {}
+  rpc DataInfo(TableInfo) returns (Dataframe) {}
 
-  rpc GetDataframe(TableInfo) returns (stream TableValue) {}
+  rpc GetArray(TableRequest) returns (stream ArrayChunk) {}
 
-  rpc GetArray(TableInfo) returns (stream TableValue) {}
-
-  rpc ShowConfig(TableInfo) returns (stream TableValue) {}
+  rpc ShowConfig(TableInfo) returns (Dataframe) {}
 
 }
 
@@ -33,83 +31,36 @@ message SearchPattern {
 message TableInfo {
   string name = 1;
   string run_id = 2;
-  repeated ColumnInfo columns = 3;
-
 }
 
+message ColumnInfo {
+  string name = 1;
+  string data_name = 2;
+  string plugin = 3;
+}
 
 message PluginInfo {
   string name = 1;
   string class_name = 2;
-  repeated ColumnInfo columns = 3;
-}
-
-
-message ColumnInfo {
-  string name  = 1;
-  string data_name = 2;
-  string plugin = 3;
-  string comment = 4;
-  string dtype = 5;
-
-}
-
-
-message Int32Array {
-  repeated int32 value = 1;
-}
-
-message Int64Array {
-  repeated int64 value = 1;
-}
-
-message BoolArray {
-  repeated bool value = 1;
-}
-
-message Float32Array {
-  repeated float value = 1;
-}
-
-message Float64Array {
-  repeated double value = 1;
-}
-
-message StringArray {
-  repeated string value = 1;
-}
-
-message TableValue {
-  string column = 1;
-  uint32 index = 2;
-  string dtype = 3;
-
-  oneof value {
-    int32 int32 = 4;
-    int64 int64 = 5;
-    float float32 = 6;
-    double float64 = 7;
-    string string = 8;
-    bool bool = 9;
-
-    Float32Array float32array = 10;
-    Float64Array float64array = 11;
-    Int32Array int32array = 12;
-    Int64Array int64array = 13;
-
-  }
 }
 
 message TableRequest {
   repeated string names = 1;
-  repeated string run_id = 2;
+  string run_id = 2;
   uint32 max_size = 3;
 }
 
 message ArrayChunk {
   uint32 nrows = 1;
-  string format = 2;
+  string serializer = 2;
   string compression = 3;
   bytes data = 4;
 
+}
+
+message Dataframe {
+  uint32 nrows = 1;
+  string serializer = 2;
+  string compression = 3;
+  bytes data = 4;
 }

@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='straxrpc/straxrpc.proto',
   package='straxrpc',
   syntax='proto3',
-  serialized_pb=_b('\n\x17straxrpc/straxrpc.proto\x12\x08straxrpc\"0\n\x06\x43onfig\x12\x13\n\x0bpax_raw_dir\x18\x01 \x01(\t\x12\x11\n\tinput_dir\x18\x02 \x01(\t\" \n\rSearchPattern\x12\x0f\n\x07pattern\x18\x01 \x01(\t\"P\n\tTableInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\t\x12%\n\x07\x63olumns\x18\x03 \x03(\x0b\x32\x14.straxrpc.ColumnInfo\"U\n\nPluginInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nclass_name\x18\x02 \x01(\t\x12%\n\x07\x63olumns\x18\x03 \x03(\x0b\x32\x14.straxrpc.ColumnInfo\"]\n\nColumnInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tdata_name\x18\x02 \x01(\t\x12\x0e\n\x06plugin\x18\x03 \x01(\t\x12\x0f\n\x07\x63omment\x18\x04 \x01(\t\x12\r\n\x05\x64type\x18\x05 \x01(\t\"\x1b\n\nInt32Array\x12\r\n\x05value\x18\x01 \x03(\x05\"\x1b\n\nInt64Array\x12\r\n\x05value\x18\x01 \x03(\x03\"\x1a\n\tBoolArray\x12\r\n\x05value\x18\x01 \x03(\x08\"\x1d\n\x0c\x46loat32Array\x12\r\n\x05value\x18\x01 \x03(\x02\"\x1d\n\x0c\x46loat64Array\x12\r\n\x05value\x18\x01 \x03(\x01\"\x1c\n\x0bStringArray\x12\r\n\x05value\x18\x01 \x03(\t\"\xe5\x02\n\nTableValue\x12\x0e\n\x06\x63olumn\x18\x01 \x01(\t\x12\r\n\x05index\x18\x02 \x01(\r\x12\r\n\x05\x64type\x18\x03 \x01(\t\x12\x0f\n\x05int32\x18\x04 \x01(\x05H\x00\x12\x0f\n\x05int64\x18\x05 \x01(\x03H\x00\x12\x11\n\x07\x66loat32\x18\x06 \x01(\x02H\x00\x12\x11\n\x07\x66loat64\x18\x07 \x01(\x01H\x00\x12\x10\n\x06string\x18\x08 \x01(\tH\x00\x12\x0e\n\x04\x62ool\x18\t \x01(\x08H\x00\x12.\n\x0c\x66loat32array\x18\n \x01(\x0b\x32\x16.straxrpc.Float32ArrayH\x00\x12.\n\x0c\x66loat64array\x18\x0b \x01(\x0b\x32\x16.straxrpc.Float64ArrayH\x00\x12*\n\nint32array\x18\x0c \x01(\x0b\x32\x14.straxrpc.Int32ArrayH\x00\x12*\n\nint64array\x18\r \x01(\x0b\x32\x14.straxrpc.Int64ArrayH\x00\x42\x07\n\x05value2\x89\x03\n\x08StraxRPC\x12@\n\x0bSearchField\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.ColumnInfo\"\x00\x30\x01\x12I\n\x14SearchDataframeNames\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.PluginInfo\"\x00\x30\x01\x12\x39\n\x08\x44\x61taInfo\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12=\n\x0cGetDataframe\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12\x39\n\x08GetArray\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x12;\n\nShowConfig\x12\x13.straxrpc.TableInfo\x1a\x14.straxrpc.TableValue\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x17straxrpc/straxrpc.proto\x12\x08straxrpc\"0\n\x06\x43onfig\x12\x13\n\x0bpax_raw_dir\x18\x01 \x01(\t\x12\x11\n\tinput_dir\x18\x02 \x01(\t\" \n\rSearchPattern\x12\x0f\n\x07pattern\x18\x01 \x01(\t\")\n\tTableInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\t\"=\n\nColumnInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tdata_name\x18\x02 \x01(\t\x12\x0e\n\x06plugin\x18\x03 \x01(\t\".\n\nPluginInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nclass_name\x18\x02 \x01(\t\"?\n\x0cTableRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\t\x12\x10\n\x08max_size\x18\x03 \x01(\r\"R\n\nArrayChunk\x12\r\n\x05nrows\x18\x01 \x01(\r\x12\x12\n\nserializer\x18\x02 \x01(\t\x12\x13\n\x0b\x63ompression\x18\x03 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x04 \x01(\x0c\"Q\n\tDataframe\x12\r\n\x05nrows\x18\x01 \x01(\r\x12\x12\n\nserializer\x18\x02 \x01(\t\x12\x13\n\x0b\x63ompression\x18\x03 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x04 \x01(\x0c\x32\xc7\x02\n\x08StraxRPC\x12@\n\x0bSearchField\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.ColumnInfo\"\x00\x30\x01\x12I\n\x14SearchDataframeNames\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.PluginInfo\"\x00\x30\x01\x12\x36\n\x08\x44\x61taInfo\x12\x13.straxrpc.TableInfo\x1a\x13.straxrpc.Dataframe\"\x00\x12<\n\x08GetArray\x12\x16.straxrpc.TableRequest\x1a\x14.straxrpc.ArrayChunk\"\x00\x30\x01\x12\x38\n\nShowConfig\x12\x13.straxrpc.TableInfo\x1a\x13.straxrpc.Dataframe\"\x00\x62\x06proto3')
 )
 
 
@@ -115,13 +115,6 @@ _TABLEINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='columns', full_name='straxrpc.TableInfo.columns', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -135,52 +128,7 @@ _TABLEINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=121,
-  serialized_end=201,
-)
-
-
-_PLUGININFO = _descriptor.Descriptor(
-  name='PluginInfo',
-  full_name='straxrpc.PluginInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='straxrpc.PluginInfo.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='class_name', full_name='straxrpc.PluginInfo.class_name', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='columns', full_name='straxrpc.PluginInfo.columns', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=203,
-  serialized_end=288,
+  serialized_end=162,
 )
 
 
@@ -212,20 +160,6 @@ _COLUMNINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='comment', full_name='straxrpc.ColumnInfo.comment', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='dtype', full_name='straxrpc.ColumnInfo.dtype', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -238,292 +172,29 @@ _COLUMNINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=290,
-  serialized_end=383,
+  serialized_start=164,
+  serialized_end=225,
 )
 
 
-_INT32ARRAY = _descriptor.Descriptor(
-  name='Int32Array',
-  full_name='straxrpc.Int32Array',
+_PLUGININFO = _descriptor.Descriptor(
+  name='PluginInfo',
+  full_name='straxrpc.PluginInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='straxrpc.Int32Array.value', index=0,
-      number=1, type=5, cpp_type=1, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=385,
-  serialized_end=412,
-)
-
-
-_INT64ARRAY = _descriptor.Descriptor(
-  name='Int64Array',
-  full_name='straxrpc.Int64Array',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='value', full_name='straxrpc.Int64Array.value', index=0,
-      number=1, type=3, cpp_type=2, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=414,
-  serialized_end=441,
-)
-
-
-_BOOLARRAY = _descriptor.Descriptor(
-  name='BoolArray',
-  full_name='straxrpc.BoolArray',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='value', full_name='straxrpc.BoolArray.value', index=0,
-      number=1, type=8, cpp_type=7, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=443,
-  serialized_end=469,
-)
-
-
-_FLOAT32ARRAY = _descriptor.Descriptor(
-  name='Float32Array',
-  full_name='straxrpc.Float32Array',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='value', full_name='straxrpc.Float32Array.value', index=0,
-      number=1, type=2, cpp_type=6, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=471,
-  serialized_end=500,
-)
-
-
-_FLOAT64ARRAY = _descriptor.Descriptor(
-  name='Float64Array',
-  full_name='straxrpc.Float64Array',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='value', full_name='straxrpc.Float64Array.value', index=0,
-      number=1, type=1, cpp_type=5, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=502,
-  serialized_end=531,
-)
-
-
-_STRINGARRAY = _descriptor.Descriptor(
-  name='StringArray',
-  full_name='straxrpc.StringArray',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='value', full_name='straxrpc.StringArray.value', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=533,
-  serialized_end=561,
-)
-
-
-_TABLEVALUE = _descriptor.Descriptor(
-  name='TableValue',
-  full_name='straxrpc.TableValue',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='column', full_name='straxrpc.TableValue.column', index=0,
+      name='name', full_name='straxrpc.PluginInfo.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='index', full_name='straxrpc.TableValue.index', index=1,
-      number=2, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='dtype', full_name='straxrpc.TableValue.dtype', index=2,
-      number=3, type=9, cpp_type=9, label=1,
+      name='class_name', full_name='straxrpc.PluginInfo.class_name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='int32', full_name='straxrpc.TableValue.int32', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='int64', full_name='straxrpc.TableValue.int64', index=4,
-      number=5, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='float32', full_name='straxrpc.TableValue.float32', index=5,
-      number=6, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='float64', full_name='straxrpc.TableValue.float64', index=6,
-      number=7, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='string', full_name='straxrpc.TableValue.string', index=7,
-      number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='bool', full_name='straxrpc.TableValue.bool', index=8,
-      number=9, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='float32array', full_name='straxrpc.TableValue.float32array', index=9,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='float64array', full_name='straxrpc.TableValue.float64array', index=10,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='int32array', full_name='straxrpc.TableValue.int32array', index=11,
-      number=12, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='int64array', full_name='straxrpc.TableValue.int64array', index=12,
-      number=13, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
@@ -538,62 +209,168 @@ _TABLEVALUE = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
-    _descriptor.OneofDescriptor(
-      name='value', full_name='straxrpc.TableValue.value',
-      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=564,
-  serialized_end=921,
+  serialized_start=227,
+  serialized_end=273,
 )
 
-_TABLEINFO.fields_by_name['columns'].message_type = _COLUMNINFO
-_PLUGININFO.fields_by_name['columns'].message_type = _COLUMNINFO
-_TABLEVALUE.fields_by_name['float32array'].message_type = _FLOAT32ARRAY
-_TABLEVALUE.fields_by_name['float64array'].message_type = _FLOAT64ARRAY
-_TABLEVALUE.fields_by_name['int32array'].message_type = _INT32ARRAY
-_TABLEVALUE.fields_by_name['int64array'].message_type = _INT64ARRAY
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['int32'])
-_TABLEVALUE.fields_by_name['int32'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['int64'])
-_TABLEVALUE.fields_by_name['int64'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['float32'])
-_TABLEVALUE.fields_by_name['float32'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['float64'])
-_TABLEVALUE.fields_by_name['float64'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['string'])
-_TABLEVALUE.fields_by_name['string'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['bool'])
-_TABLEVALUE.fields_by_name['bool'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['float32array'])
-_TABLEVALUE.fields_by_name['float32array'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['float64array'])
-_TABLEVALUE.fields_by_name['float64array'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['int32array'])
-_TABLEVALUE.fields_by_name['int32array'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
-_TABLEVALUE.oneofs_by_name['value'].fields.append(
-  _TABLEVALUE.fields_by_name['int64array'])
-_TABLEVALUE.fields_by_name['int64array'].containing_oneof = _TABLEVALUE.oneofs_by_name['value']
+
+_TABLEREQUEST = _descriptor.Descriptor(
+  name='TableRequest',
+  full_name='straxrpc.TableRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='names', full_name='straxrpc.TableRequest.names', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='run_id', full_name='straxrpc.TableRequest.run_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max_size', full_name='straxrpc.TableRequest.max_size', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=275,
+  serialized_end=338,
+)
+
+
+_ARRAYCHUNK = _descriptor.Descriptor(
+  name='ArrayChunk',
+  full_name='straxrpc.ArrayChunk',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='nrows', full_name='straxrpc.ArrayChunk.nrows', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='serializer', full_name='straxrpc.ArrayChunk.serializer', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='compression', full_name='straxrpc.ArrayChunk.compression', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='straxrpc.ArrayChunk.data', index=3,
+      number=4, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=340,
+  serialized_end=422,
+)
+
+
+_DATAFRAME = _descriptor.Descriptor(
+  name='Dataframe',
+  full_name='straxrpc.Dataframe',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='nrows', full_name='straxrpc.Dataframe.nrows', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='serializer', full_name='straxrpc.Dataframe.serializer', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='compression', full_name='straxrpc.Dataframe.compression', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='straxrpc.Dataframe.data', index=3,
+      number=4, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=424,
+  serialized_end=505,
+)
+
 DESCRIPTOR.message_types_by_name['Config'] = _CONFIG
 DESCRIPTOR.message_types_by_name['SearchPattern'] = _SEARCHPATTERN
 DESCRIPTOR.message_types_by_name['TableInfo'] = _TABLEINFO
-DESCRIPTOR.message_types_by_name['PluginInfo'] = _PLUGININFO
 DESCRIPTOR.message_types_by_name['ColumnInfo'] = _COLUMNINFO
-DESCRIPTOR.message_types_by_name['Int32Array'] = _INT32ARRAY
-DESCRIPTOR.message_types_by_name['Int64Array'] = _INT64ARRAY
-DESCRIPTOR.message_types_by_name['BoolArray'] = _BOOLARRAY
-DESCRIPTOR.message_types_by_name['Float32Array'] = _FLOAT32ARRAY
-DESCRIPTOR.message_types_by_name['Float64Array'] = _FLOAT64ARRAY
-DESCRIPTOR.message_types_by_name['StringArray'] = _STRINGARRAY
-DESCRIPTOR.message_types_by_name['TableValue'] = _TABLEVALUE
+DESCRIPTOR.message_types_by_name['PluginInfo'] = _PLUGININFO
+DESCRIPTOR.message_types_by_name['TableRequest'] = _TABLEREQUEST
+DESCRIPTOR.message_types_by_name['ArrayChunk'] = _ARRAYCHUNK
+DESCRIPTOR.message_types_by_name['Dataframe'] = _DATAFRAME
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Config = _reflection.GeneratedProtocolMessageType('Config', (_message.Message,), dict(
@@ -617,13 +394,6 @@ TableInfo = _reflection.GeneratedProtocolMessageType('TableInfo', (_message.Mess
   ))
 _sym_db.RegisterMessage(TableInfo)
 
-PluginInfo = _reflection.GeneratedProtocolMessageType('PluginInfo', (_message.Message,), dict(
-  DESCRIPTOR = _PLUGININFO,
-  __module__ = 'straxrpc.straxrpc_pb2'
-  # @@protoc_insertion_point(class_scope:straxrpc.PluginInfo)
-  ))
-_sym_db.RegisterMessage(PluginInfo)
-
 ColumnInfo = _reflection.GeneratedProtocolMessageType('ColumnInfo', (_message.Message,), dict(
   DESCRIPTOR = _COLUMNINFO,
   __module__ = 'straxrpc.straxrpc_pb2'
@@ -631,54 +401,33 @@ ColumnInfo = _reflection.GeneratedProtocolMessageType('ColumnInfo', (_message.Me
   ))
 _sym_db.RegisterMessage(ColumnInfo)
 
-Int32Array = _reflection.GeneratedProtocolMessageType('Int32Array', (_message.Message,), dict(
-  DESCRIPTOR = _INT32ARRAY,
+PluginInfo = _reflection.GeneratedProtocolMessageType('PluginInfo', (_message.Message,), dict(
+  DESCRIPTOR = _PLUGININFO,
   __module__ = 'straxrpc.straxrpc_pb2'
-  # @@protoc_insertion_point(class_scope:straxrpc.Int32Array)
+  # @@protoc_insertion_point(class_scope:straxrpc.PluginInfo)
   ))
-_sym_db.RegisterMessage(Int32Array)
+_sym_db.RegisterMessage(PluginInfo)
 
-Int64Array = _reflection.GeneratedProtocolMessageType('Int64Array', (_message.Message,), dict(
-  DESCRIPTOR = _INT64ARRAY,
+TableRequest = _reflection.GeneratedProtocolMessageType('TableRequest', (_message.Message,), dict(
+  DESCRIPTOR = _TABLEREQUEST,
   __module__ = 'straxrpc.straxrpc_pb2'
-  # @@protoc_insertion_point(class_scope:straxrpc.Int64Array)
+  # @@protoc_insertion_point(class_scope:straxrpc.TableRequest)
   ))
-_sym_db.RegisterMessage(Int64Array)
+_sym_db.RegisterMessage(TableRequest)
 
-BoolArray = _reflection.GeneratedProtocolMessageType('BoolArray', (_message.Message,), dict(
-  DESCRIPTOR = _BOOLARRAY,
+ArrayChunk = _reflection.GeneratedProtocolMessageType('ArrayChunk', (_message.Message,), dict(
+  DESCRIPTOR = _ARRAYCHUNK,
   __module__ = 'straxrpc.straxrpc_pb2'
-  # @@protoc_insertion_point(class_scope:straxrpc.BoolArray)
+  # @@protoc_insertion_point(class_scope:straxrpc.ArrayChunk)
   ))
-_sym_db.RegisterMessage(BoolArray)
+_sym_db.RegisterMessage(ArrayChunk)
 
-Float32Array = _reflection.GeneratedProtocolMessageType('Float32Array', (_message.Message,), dict(
-  DESCRIPTOR = _FLOAT32ARRAY,
+Dataframe = _reflection.GeneratedProtocolMessageType('Dataframe', (_message.Message,), dict(
+  DESCRIPTOR = _DATAFRAME,
   __module__ = 'straxrpc.straxrpc_pb2'
-  # @@protoc_insertion_point(class_scope:straxrpc.Float32Array)
+  # @@protoc_insertion_point(class_scope:straxrpc.Dataframe)
   ))
-_sym_db.RegisterMessage(Float32Array)
-
-Float64Array = _reflection.GeneratedProtocolMessageType('Float64Array', (_message.Message,), dict(
-  DESCRIPTOR = _FLOAT64ARRAY,
-  __module__ = 'straxrpc.straxrpc_pb2'
-  # @@protoc_insertion_point(class_scope:straxrpc.Float64Array)
-  ))
-_sym_db.RegisterMessage(Float64Array)
-
-StringArray = _reflection.GeneratedProtocolMessageType('StringArray', (_message.Message,), dict(
-  DESCRIPTOR = _STRINGARRAY,
-  __module__ = 'straxrpc.straxrpc_pb2'
-  # @@protoc_insertion_point(class_scope:straxrpc.StringArray)
-  ))
-_sym_db.RegisterMessage(StringArray)
-
-TableValue = _reflection.GeneratedProtocolMessageType('TableValue', (_message.Message,), dict(
-  DESCRIPTOR = _TABLEVALUE,
-  __module__ = 'straxrpc.straxrpc_pb2'
-  # @@protoc_insertion_point(class_scope:straxrpc.TableValue)
-  ))
-_sym_db.RegisterMessage(TableValue)
+_sym_db.RegisterMessage(Dataframe)
 
 
 
@@ -688,8 +437,8 @@ _STRAXRPC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=924,
-  serialized_end=1317,
+  serialized_start=508,
+  serialized_end=835,
   methods=[
   _descriptor.MethodDescriptor(
     name='SearchField',
@@ -715,34 +464,25 @@ _STRAXRPC = _descriptor.ServiceDescriptor(
     index=2,
     containing_service=None,
     input_type=_TABLEINFO,
-    output_type=_TABLEVALUE,
-    options=None,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetDataframe',
-    full_name='straxrpc.StraxRPC.GetDataframe',
-    index=3,
-    containing_service=None,
-    input_type=_TABLEINFO,
-    output_type=_TABLEVALUE,
+    output_type=_DATAFRAME,
     options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetArray',
     full_name='straxrpc.StraxRPC.GetArray',
-    index=4,
+    index=3,
     containing_service=None,
-    input_type=_TABLEINFO,
-    output_type=_TABLEVALUE,
+    input_type=_TABLEREQUEST,
+    output_type=_ARRAYCHUNK,
     options=None,
   ),
   _descriptor.MethodDescriptor(
     name='ShowConfig',
     full_name='straxrpc.StraxRPC.ShowConfig',
-    index=5,
+    index=4,
     containing_service=None,
     input_type=_TABLEINFO,
-    output_type=_TABLEVALUE,
+    output_type=_DATAFRAME,
     options=None,
   ),
 ])

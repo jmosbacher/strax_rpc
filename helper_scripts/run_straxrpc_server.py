@@ -1,6 +1,6 @@
 if __name__ == '__main__':
     try:
-        from straxrpc import StraxServer
+        from straxrpc.server import StraxServer
         import strax
         server = StraxServer()
         st = strax.Context(register_all=strax.xenon.plugins,

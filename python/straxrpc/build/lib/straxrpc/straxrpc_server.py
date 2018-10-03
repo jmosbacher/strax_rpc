@@ -9,9 +9,10 @@ import grpc
 from . import straxrpc_pb2
 from . import straxrpc_pb2_grpc
 from .data_types import type_testers
+import pickle
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
-
+MAXBYTES = 10**5
 
 
 def fake_df(ncol=10,nrow=10):
@@ -29,36 +30,9 @@ def fake_arr(ncol=10,nrow=10):
     a.dtype=np.dtype([(('random column number {}'.format(c),'col_{}'.format(c)),np.float64) for c in range(ncol)])
     return a
 
-def table_to_values(table):
-    if isinstance(table, dict):
-        keys = list(table.keys())
-        dtype_names = [str(type(table[k][0]) for k in keys)]
-    elif isinstance(table, np.ndarray):
-        keys = list(table.dtype.names)
-        dtype_names = [str(table.dtype[i]) for i, _ in enumerate(table.dtype.names)]
-    elif isinstance(table, pd.DataFrame):
-        keys = list(table.columns)
-        dtype_names = [str(table[k].dtype) for k in keys]
-        table = table.to_dict(orient="list")
-    else:
-        return None
-    testers = []
-    for name in dtype_names:
-        for tester in type_testers:
-            if tester.test(name):
-                testers.append(tester)
-                break 
-    for i, vals in enumerate(zip(*[table[k] for k in keys])):
-        for k, v, t in zip(keys, vals, testers):
-            kwargs = {
-                "index": i,
-                "column": k,
-                "dtype": t.name,
-                t.name: t.cast(v),
-            }
-            print(kwargs)
-            print(type(v) for v in kwargs.values())
-            yield straxrpc_pb2.TableValue(**kwargs)
+def empty_arr(names, dtypes):
+    arr = np.fromiter(zip(*[[]*len(names)]), dtype={"names":names, "formats": dtypes})
+    return arr
 
 
 def search_field(ctx, pattern):
@@ -84,7 +58,12 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
         print('Servicer started.')
         self.ctx = strax_context
         
-
+    def array_to_chunks(self, arr):
+        nmsgs = max(arr.nbytes//MAXBYTES,1)
+        parts = np.array_split(arr, nmsgs)
+        for part in parts:
+            msg = pickle.dumps(part)
+            yield straxrpc_pb2.ArrayChunk(data=msg, nrows=part.size, serializer="pickle")
 
     def SearchField(self, request, context):
         """
@@ -110,30 +89,21 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
       """
       dataname = request.name
       df = self.ctx.data_info(dataname)
-      for val in table_to_values(df):
-          yield val
-
-    def GetDataframe(self, request, context):
-        plugin_name = request.name
-        run_id = request.run_id
-        try:
-            df = self.ctx.get_df(run_id, plugin_name) #
-        except:
-            columns = self.ctx.data_info(plugin_name)["Field name"].values
-            df = empty_df(columns) #
-        for v in table_to_values(df):
-            yield v
+      msg = pickle.dumps(df)
+      return straxrpc_pb2.Dataframe(data=msg, serializer="pickle", nrows=len(df.index))
 
     def GetArray(self, request, context):
-        plugin_name = request.name
+        plugin_names = [name for name in request.names]
         run_id = request.run_id
         try:
-            arr = self.ctx.get_array(run_id, plugin_name) #
+            arr = self.ctx.get_array(run_id, plugin_names) 
         except:
-            columns = self.ctx.data_info(plugin_name)["Field name"].values
-            df = empty_df(columns) #
-        for v in table_to_values(arr):
-            yield v
+            info = pd.concat([self.ctx.data_info(plugin_name) for plugin_name in plugin_names])
+            columns = list(info["Field name"])
+            dtypes = list(info["Data type"])
+            arr = empty_arr(columns, dtypes) 
+        for r in self.array_to_chunks(arr):
+            yield r
 
     def SearchDataframeNames(self, request, context):
         pattern = request.pattern
@@ -144,8 +114,8 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
     def ShowConfig(self, request, context):
         name = request.name
         df = self.ctx.show_config(name)
-        for v in table_to_values(df):
-            yield v
+        msg = pickle.dumps(df)
+        return straxrpc_pb2.Dataframe(data=msg, serializer="pickle", nrows=len(df.index))
 
 class StraxServer:
     def __init__(self, addr="localhost:50051", strax_context=None):
