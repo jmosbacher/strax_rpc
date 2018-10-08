@@ -96,14 +96,15 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
         plugin_names = [name for name in request.names]
         run_id = request.run_id
         try:
-            arr = self.ctx.get_array(run_id, plugin_names) 
+            for arr in self.ctx.get_iter(run_id, plugin_names):
+                for r in self.array_to_chunks(arr):
+                    yield r
         except:
             info = pd.concat([self.ctx.data_info(plugin_name) for plugin_name in plugin_names])
             columns = list(info["Field name"])
             dtypes = list(info["Data type"])
-            arr = empty_arr(columns, dtypes) 
-        for r in self.array_to_chunks(arr):
-            yield r
+            arr = empty_arr(columns, dtypes)
+        
 
     def SearchDataframeNames(self, request, context):
         pattern = request.pattern

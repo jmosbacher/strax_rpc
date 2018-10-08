@@ -10,11 +10,11 @@ service StraxRPC {
 
   rpc SearchDataframeNames(SearchPattern) returns (stream PluginInfo) {}
 
-  rpc DataInfo(TableInfo) returns (Dataframe) {}
+  rpc DataInfo(TableRequest) returns (Dataframe) {}
 
   rpc GetArray(TableRequest) returns (stream ArrayChunk) {}
 
-  rpc ShowConfig(TableInfo) returns (Dataframe) {}
+  rpc ShowConfig(TableRequest) returns (Dataframe) {}
 
 }
 
@@ -46,8 +46,11 @@ message PluginInfo {
 
 message TableRequest {
   repeated string names = 1;
-  string run_id = 2;
-  uint32 max_size = 3;
+  string serializer = 2;
+  string compression = 3;
+  string run_id = 4;
+  uint32 max_size = 5;
+  
 }
 
 message ArrayChunk {

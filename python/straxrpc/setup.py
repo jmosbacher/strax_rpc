@@ -17,6 +17,6 @@ setup(name='straxrpc',
       ],
       extra_requires={
           "server": ['strax',
-                    'fnmatch',]
+                    ]
       },
       zip_safe=False)
