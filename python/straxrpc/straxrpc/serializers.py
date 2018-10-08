@@ -24,19 +24,37 @@ class PickleSerializer(Serializer):
     def bytes_to_array(bytes):
         return pickle.loads(bytes)
 
-class JsonSerializer(Serializer):
+class JsonSerializer:
     @staticmethod
     def array_to_bytes(arr):
-        d = {n:arr[n].tolist() for n in arr.dtype.names}
+        
+        d = {
+            "dtype": {"names": arr.dtype.names,
+                 "formats": [str(arr.dtype[n])for n in arr.dtype.names ],# 
+                },
+        "__ndarray__":arr.tolist()}
         return json.dumps(d)
 
     @staticmethod   
     def bytes_to_array(bytes):
         d = json.loads(bytes)
-        
+        ts = [tuple(t) for t in d["__ndarray__"]]
+        return np.array(ts, dtype=d["dtype"])
+
+
+class MsgpackSerializer(Serializer):
+    @staticmethod
+    def array_to_bytes(arr):
+        pass
+
+    @staticmethod   
+    def bytes_to_array(bytes):
+       pass
 
 
 serializers = {
     "pickle": PickleSerializer,
+    "json": JsonSerializer,
+    "msgpack": MsgpackSerializer,
 
 }
