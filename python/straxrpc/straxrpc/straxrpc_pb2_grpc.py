@@ -26,7 +26,7 @@ class StraxRPCStub(object):
         )
     self.DataInfo = channel.unary_unary(
         '/straxrpc.StraxRPC/DataInfo',
-        request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
+        request_serializer=straxrpc_dot_straxrpc__pb2.TableRequest.SerializeToString,
         response_deserializer=straxrpc_dot_straxrpc__pb2.Dataframe.FromString,
         )
     self.GetArray = channel.unary_stream(
@@ -36,7 +36,7 @@ class StraxRPCStub(object):
         )
     self.ShowConfig = channel.unary_unary(
         '/straxrpc.StraxRPC/ShowConfig',
-        request_serializer=straxrpc_dot_straxrpc__pb2.TableInfo.SerializeToString,
+        request_serializer=straxrpc_dot_straxrpc__pb2.TableRequest.SerializeToString,
         response_deserializer=straxrpc_dot_straxrpc__pb2.Dataframe.FromString,
         )
 
@@ -95,7 +95,7 @@ def add_StraxRPCServicer_to_server(servicer, server):
       ),
       'DataInfo': grpc.unary_unary_rpc_method_handler(
           servicer.DataInfo,
-          request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
+          request_deserializer=straxrpc_dot_straxrpc__pb2.TableRequest.FromString,
           response_serializer=straxrpc_dot_straxrpc__pb2.Dataframe.SerializeToString,
       ),
       'GetArray': grpc.unary_stream_rpc_method_handler(
@@ -105,7 +105,7 @@ def add_StraxRPCServicer_to_server(servicer, server):
       ),
       'ShowConfig': grpc.unary_unary_rpc_method_handler(
           servicer.ShowConfig,
-          request_deserializer=straxrpc_dot_straxrpc__pb2.TableInfo.FromString,
+          request_deserializer=straxrpc_dot_straxrpc__pb2.TableRequest.FromString,
           response_serializer=straxrpc_dot_straxrpc__pb2.Dataframe.SerializeToString,
       ),
   }

@@ -13,6 +13,15 @@ class Serializer:
     @staticmethod
     def bytes_to_array(bytes):
         raise NotImplementedError
+    
+    @staticmethod
+    def df_to_bytes(arr):
+        raise NotImplementedError
+
+    @staticmethod
+    def bytes_to_df(bytes):
+        raise NotImplementedError
+    
 
 
 class PickleSerializer(Serializer):
@@ -22,6 +31,14 @@ class PickleSerializer(Serializer):
 
     @staticmethod   
     def bytes_to_array(bytes):
+        return pickle.loads(bytes)
+
+    @staticmethod
+    def df_to_bytes(df):
+        return pickle.dumps(df)
+
+    @staticmethod
+    def bytes_to_df(bytes):
         return pickle.loads(bytes)
 
 class JsonSerializer:
@@ -40,6 +57,14 @@ class JsonSerializer:
         d = json.loads(bytes)
         ts = [tuple(t) for t in d["__ndarray__"]]
         return np.array(ts, dtype=d["dtype"])
+
+    @staticmethod
+    def df_to_bytes(df):
+        return df.to_json()
+
+    @staticmethod
+    def bytes_to_df(bytes):
+        return pd.read_json(bytes)
 
 
 class MsgpackSerializer(Serializer):

@@ -10,9 +10,12 @@ from . import straxrpc_pb2
 from . import straxrpc_pb2_grpc
 from .data_types import type_testers
 import pickle
+from serializers import serializers
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 MAXBYTES = 10**5
+
+
 
 
 def fake_df(ncol=10,nrow=10):
@@ -62,8 +65,9 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
         nmsgs = max(arr.nbytes//MAXBYTES,1)
         parts = np.array_split(arr, nmsgs)
         for part in parts:
-            msg = pickle.dumps(part)
-            yield straxrpc_pb2.ArrayChunk(data=msg, nrows=part.size, serializer="pickle")
+            msg = serializers[serializer].array_to_bytes(part)
+            # msg = pickle.dumps(part)
+            yield straxrpc_pb2.ArrayChunk(data=msg, nrows=part.size, serializer=serializer, compression='none')
 
     def SearchField(self, request, context):
         """
@@ -87,25 +91,32 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
       """
 
       """
-      dataname = request.name
-      df = self.ctx.data_info(dataname)
-      msg = pickle.dumps(df)
-      return straxrpc_pb2.Dataframe(data=msg, serializer="pickle", nrows=len(df.index))
+      name = request.names[0]
+      df = self.ctx.data_info(name)
+      serializer = request.serializer
+      if not serializer:
+        serializer = "pickle"
+      msg = serializers[serializer].df_to_bytes(df.astype("str"))
+      return straxrpc_pb2.Dataframe(data=msg, serializer="serializer", nrows=len(df.index))
 
     def GetArray(self, request, context):
         plugin_names = [name for name in request.names]
         run_id = request.run_id
+        serializer = request.serializer
+        if not serializer:
+            serializer = "pickle"
         try:
             for arr in self.ctx.get_iter(run_id, plugin_names):
-                for r in self.array_to_chunks(arr):
+                for r in self.array_to_chunks(arr, serializer=serializer):
                     yield r
         except:
             info = pd.concat([self.ctx.data_info(plugin_name) for plugin_name in plugin_names])
             columns = list(info["Field name"])
             dtypes = list(info["Data type"])
             arr = empty_arr(columns, dtypes)
+            for r in self.array_to_chunks(arr, serializer=serializer):
+                    yield r
         
-
     def SearchDataframeNames(self, request, context):
         pattern = request.pattern
         for d in self.ctx._plugin_class_registry:
@@ -113,10 +124,14 @@ class StraxRPCServicer(straxrpc_pb2_grpc.StraxRPCServicer):
                 yield straxrpc_pb2.PluginInfo(name=d,)
 
     def ShowConfig(self, request, context):
-        name = request.name
+        name = request.names[0]
+        serializer = request.serializer
+        if not serializer:
+            serializer = "pickle"
         df = self.ctx.show_config(name)
-        msg = pickle.dumps(df)
-        return straxrpc_pb2.Dataframe(data=msg, serializer="pickle", nrows=len(df.index))
+        msg = serializers[serializer].df_to_bytes(df)
+        # msg = pickle.dumps(df)
+        return straxrpc_pb2.Dataframe(data=msg, serializer=serializer, nrows=len(df.index))
 
 class StraxServer:
     def __init__(self, addr="localhost:50051", strax_context=None):

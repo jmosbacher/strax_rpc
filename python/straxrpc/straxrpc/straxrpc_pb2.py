@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='straxrpc/straxrpc.proto',
   package='straxrpc',
   syntax='proto3',
-  serialized_pb=_b('\n\x17straxrpc/straxrpc.proto\x12\x08straxrpc\"0\n\x06\x43onfig\x12\x13\n\x0bpax_raw_dir\x18\x01 \x01(\t\x12\x11\n\tinput_dir\x18\x02 \x01(\t\" \n\rSearchPattern\x12\x0f\n\x07pattern\x18\x01 \x01(\t\")\n\tTableInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\t\"=\n\nColumnInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tdata_name\x18\x02 \x01(\t\x12\x0e\n\x06plugin\x18\x03 \x01(\t\".\n\nPluginInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nclass_name\x18\x02 \x01(\t\"?\n\x0cTableRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\t\x12\x10\n\x08max_size\x18\x03 \x01(\r\"R\n\nArrayChunk\x12\r\n\x05nrows\x18\x01 \x01(\r\x12\x12\n\nserializer\x18\x02 \x01(\t\x12\x13\n\x0b\x63ompression\x18\x03 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x04 \x01(\x0c\"Q\n\tDataframe\x12\r\n\x05nrows\x18\x01 \x01(\r\x12\x12\n\nserializer\x18\x02 \x01(\t\x12\x13\n\x0b\x63ompression\x18\x03 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x04 \x01(\x0c\x32\xc7\x02\n\x08StraxRPC\x12@\n\x0bSearchField\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.ColumnInfo\"\x00\x30\x01\x12I\n\x14SearchDataframeNames\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.PluginInfo\"\x00\x30\x01\x12\x36\n\x08\x44\x61taInfo\x12\x13.straxrpc.TableInfo\x1a\x13.straxrpc.Dataframe\"\x00\x12<\n\x08GetArray\x12\x16.straxrpc.TableRequest\x1a\x14.straxrpc.ArrayChunk\"\x00\x30\x01\x12\x38\n\nShowConfig\x12\x13.straxrpc.TableInfo\x1a\x13.straxrpc.Dataframe\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x17straxrpc/straxrpc.proto\x12\x08straxrpc\"0\n\x06\x43onfig\x12\x13\n\x0bpax_raw_dir\x18\x01 \x01(\t\x12\x11\n\tinput_dir\x18\x02 \x01(\t\" \n\rSearchPattern\x12\x0f\n\x07pattern\x18\x01 \x01(\t\")\n\tTableInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06run_id\x18\x02 \x01(\t\"=\n\nColumnInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tdata_name\x18\x02 \x01(\t\x12\x0e\n\x06plugin\x18\x03 \x01(\t\".\n\nPluginInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nclass_name\x18\x02 \x01(\t\"h\n\x0cTableRequest\x12\r\n\x05names\x18\x01 \x03(\t\x12\x12\n\nserializer\x18\x02 \x01(\t\x12\x13\n\x0b\x63ompression\x18\x03 \x01(\t\x12\x0e\n\x06run_id\x18\x04 \x01(\t\x12\x10\n\x08max_size\x18\x05 \x01(\r\"R\n\nArrayChunk\x12\r\n\x05nrows\x18\x01 \x01(\r\x12\x12\n\nserializer\x18\x02 \x01(\t\x12\x13\n\x0b\x63ompression\x18\x03 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x04 \x01(\x0c\"Q\n\tDataframe\x12\r\n\x05nrows\x18\x01 \x01(\r\x12\x12\n\nserializer\x18\x02 \x01(\t\x12\x13\n\x0b\x63ompression\x18\x03 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x04 \x01(\x0c\x32\xcd\x02\n\x08StraxRPC\x12@\n\x0bSearchField\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.ColumnInfo\"\x00\x30\x01\x12I\n\x14SearchDataframeNames\x12\x17.straxrpc.SearchPattern\x1a\x14.straxrpc.PluginInfo\"\x00\x30\x01\x12\x39\n\x08\x44\x61taInfo\x12\x16.straxrpc.TableRequest\x1a\x13.straxrpc.Dataframe\"\x00\x12<\n\x08GetArray\x12\x16.straxrpc.TableRequest\x1a\x14.straxrpc.ArrayChunk\"\x00\x30\x01\x12;\n\nShowConfig\x12\x16.straxrpc.TableRequest\x1a\x13.straxrpc.Dataframe\"\x00\x62\x06proto3')
 )
 
 
@@ -230,15 +230,29 @@ _TABLEREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='run_id', full_name='straxrpc.TableRequest.run_id', index=1,
+      name='serializer', full_name='straxrpc.TableRequest.serializer', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='max_size', full_name='straxrpc.TableRequest.max_size', index=2,
-      number=3, type=13, cpp_type=3, label=1,
+      name='compression', full_name='straxrpc.TableRequest.compression', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='run_id', full_name='straxrpc.TableRequest.run_id', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max_size', full_name='straxrpc.TableRequest.max_size', index=4,
+      number=5, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -256,7 +270,7 @@ _TABLEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=275,
-  serialized_end=338,
+  serialized_end=379,
 )
 
 
@@ -307,8 +321,8 @@ _ARRAYCHUNK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=340,
-  serialized_end=422,
+  serialized_start=381,
+  serialized_end=463,
 )
 
 
@@ -359,8 +373,8 @@ _DATAFRAME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=424,
-  serialized_end=505,
+  serialized_start=465,
+  serialized_end=546,
 )
 
 DESCRIPTOR.message_types_by_name['Config'] = _CONFIG
@@ -437,8 +451,8 @@ _STRAXRPC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=508,
-  serialized_end=835,
+  serialized_start=549,
+  serialized_end=882,
   methods=[
   _descriptor.MethodDescriptor(
     name='SearchField',
@@ -463,7 +477,7 @@ _STRAXRPC = _descriptor.ServiceDescriptor(
     full_name='straxrpc.StraxRPC.DataInfo',
     index=2,
     containing_service=None,
-    input_type=_TABLEINFO,
+    input_type=_TABLEREQUEST,
     output_type=_DATAFRAME,
     options=None,
   ),
@@ -481,7 +495,7 @@ _STRAXRPC = _descriptor.ServiceDescriptor(
     full_name='straxrpc.StraxRPC.ShowConfig',
     index=4,
     containing_service=None,
-    input_type=_TABLEINFO,
+    input_type=_TABLEREQUEST,
     output_type=_DATAFRAME,
     options=None,
   ),

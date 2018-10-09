@@ -24,7 +24,7 @@ class StraxClient:
     def data_info(self, dataname):
         with grpc.insecure_channel(self.addr) as channel:
             stub = straxrpc_pb2_grpc.StraxRPCStub(channel)
-            ti = straxrpc_pb2.TableInfo(name=dataname)
+            ti = straxrpc_pb2.TableRequest(names=[dataname])
             r = stub.DataInfo(ti)
             df = pickle.loads(r.data)
             return df
@@ -58,7 +58,7 @@ class StraxClient:
     def show_config(self, name):
         with grpc.insecure_channel(self.addr) as channel:
             stub = straxrpc_pb2_grpc.StraxRPCStub(channel)
-            ti = straxrpc_pb2.TableInfo(name=name)
+            ti = straxrpc_pb2.TableRequest(names=[name])
             r = stub.ShowConfig(ti)
             df = pickle.loads(r.data)
             return df
